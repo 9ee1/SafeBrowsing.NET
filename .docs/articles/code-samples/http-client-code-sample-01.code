@@ -1,0 +1,41 @@
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// <summary>
+    ///     Main Program.
+    /// </summary>
+    public static class Program {
+        /// <summary>
+        ///     Execute Main Program.
+        /// </summary>
+        /// <param name="args">
+        ///     A collection of arguments passed from the command line.
+        /// </param>
+        /// <returns>
+        ///     A task representing the asynchronous operation
+        /// </returns>
+        public static async Task Main(string[] args) {
+            var httpClient = new HttpBrowsingClient("YOUR_GOOGLE_API_KEY");
+            using (httpClient) {
+                try {
+                    var getThreatListDescriptorsTask = httpClient.GetThreatListDescriptorsAsync(CancellationToken.None);
+                    var threatListDescriptors = await getThreatListDescriptorsTask.ConfigureAwait(false);
+                    foreach (var threatListDescriptor in threatListDescriptors) {
+                        // ...
+                        //
+                        // Do something with each threat list descriptor.
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+            }
+        }
+    }
+}

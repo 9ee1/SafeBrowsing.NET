@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Threat Databases Code Samples </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Threat Databases Code Samples ">
+    <meta name="generator" content="docfx 2.48.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="threat-databases-code-samples">Threat Databases Code Samples</h1>
+
+<p><code>Threat Databases</code> are a mechanism to store threat lists retrieved from the Google Safe Browsing API. Once you store
+one or more threat lists in a <code>Threat Database</code>, you can then query it to determine if a threat exists or not.</p>
+<p>If you're using a <code>Managed Service</code>, you'll typically never interact with a <code>Threat Database</code> directly because the
+<code>Managed Service</code> will retrieve threat lists on a periodic schedule and manage a <code>Threat Database</code> for you
+automatically. If you, however, wish to retrieve threat lists manually using a <code>Client</code>, you should consider using one
+of the out-of-the-box <code>Threat Databases</code> provided by Safe Browsing.NET as opposed to building your own.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>To follow along with these examples, please see the
+<a class="xref" href="../../api/Gee.External.Browsing.Databases.html">Gee.External.Browsing.Databases</a> and the
+<a class="xref" href="../../api/Gee.External.Browsing.Databases.Json.html">Gee.External.Browsing.Databases.Json</a> namespaces in the
+<a class="xref" href="../../api/Gee.External.Browsing.html">Safe Browsing.NET API reference</a>.</p>
+</div>
+<h2 id="example-using-an-in-memory-database-to-store-retrieved-threat-lists">Example: Using an In-Memory Database to Store Retrieved Threat Lists</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using Gee.External.Browsing.Databases;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Get Threat List Descriptors.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;client&quot;&gt;
+        ///     A &lt;see cref=&quot;IBrowsingClient&quot; /&gt;.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A collection of &lt;see cref=&quot;ThreatListDescriptor&quot; /&gt;.
+        /// &lt;/returns&gt;
+        /// &lt;exception cref=&quot;Gee.External.Browsing.Clients.BrowsingClientException&quot;&gt;
+        ///     Thrown if an error communicating with the Google Safe Browsing API occurs.
+        /// &lt;/exception&gt;
+        /// &lt;exception cref=&quot;System.TimeoutException&quot;&gt;
+        ///     Thrown if communication with the Google Safe Browsing API times out.
+        /// &lt;/exception&gt;
+        private static Task&lt;IEnumerable&lt;ThreatListDescriptor&gt;&gt; GetThreatListDescriptorsAsync(IBrowsingClient client) {
+            var getThreatListDescriptorsTask = client.GetThreatListDescriptorsAsync(CancellationToken.None);
+            return getThreatListDescriptorsTask;
+        }
+
+        /// &lt;summary&gt;
+        ///     Get Threat List Updates.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;client&quot;&gt;
+        ///     A &lt;see cref=&quot;IBrowsingClient&quot; /&gt;.
+        /// &lt;/param&gt;
+        /// &lt;param name=&quot;threatListDescriptors&quot;&gt;
+        ///     A collection of &lt;see cref=&quot;ThreatListDescriptor&quot; /&gt; identifying the &lt;see cref=&quot;ThreatList&quot; /&gt; to
+        ///     retrieve.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A &lt;see cref=&quot;ThreatListUpdateResponse&quot; /&gt;.
+        /// &lt;/returns&gt;
+        /// &lt;exception cref=&quot;Gee.External.Browsing.Clients.BrowsingClientException&quot;&gt;
+        ///     Thrown if an error communicating with the Google Safe Browsing API occurs.
+        /// &lt;/exception&gt;
+        /// &lt;exception cref=&quot;System.TimeoutException&quot;&gt;
+        ///     Thrown if communication with the Google Safe Browsing API times out.
+        /// &lt;/exception&gt;
+        private static Task&lt;ThreatListUpdateResponse&gt; GetThreatListUpdatesAsync(IBrowsingClient client, IEnumerable&lt;ThreatListDescriptor&gt; threatListDescriptors) {
+            var requestBuilder = ThreatListUpdateRequest.Build();
+            foreach (var threatListDescriptor in threatListDescriptors) {
+                // ...
+                //
+                // Add the threat list descriptor to the request so you can retrieve it as a full update.
+                requestBuilder.AddQuery(b =&gt; {
+                    b.SetThreatListDescriptor(threatListDescriptor);
+                    return b.Build();
+                });
+            }
+
+            var request = requestBuilder.Build();
+            var getThreatListUpdatesTask = client.GetThreatListUpdatesAsync(request, CancellationToken.None);
+            return getThreatListUpdatesTask;
+        }
+
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static async Task Main(string[] args) {
+            // ...
+            //
+            // Create an HTTP client to communicate with the Google Safe Browsing API. Create an in-memory database
+            // to store retrieved threat lists in-memory. When the process terminates, the data is lost. Depending on
+            // how many threat lists you retrieve, this can consume a very large amount of memory.
+            using (var httpClient = new HttpBrowsingClient(&quot;YOUR_GOOGLE_API_KEY&quot;))
+            using (var memoryDatabase = new MemoryBrowsingDatabase()) {
+                try {
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListDescriptorsTask = Program.GetThreatListDescriptorsAsync(httpClient);
+                    var threatListDescriptors = await getThreatListDescriptorsTask.ConfigureAwait(false);
+
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListUpdatesTask = Program.GetThreatListUpdatesAsync(httpClient, threatListDescriptors);
+                    var threatListUpdateResponse = await getThreatListUpdatesTask.ConfigureAwait(false);
+                    foreach (var threatListUpdateResponseResult in threatListUpdateResponse.Results) {
+                        var threatList = threatListUpdateResponseResult.RetrievedThreatList;
+                        if (threatListUpdateResponseResult.IsFullUpdate) {
+                            // ...
+                            //
+                            // Store a local copy of the threat list. If the threat list already exists in the
+                            // database, it will be replaced in its entirety.
+                            //
+                            // Throws an exception if the operation fails.
+                            var threatsToAdd = threatListUpdateResponseResult.ThreatsToAdd;
+                            var storeThreatListTask = memoryDatabase.StoreThreatListAsync(threatList, threatsToAdd);
+                            await storeThreatListTask.ConfigureAwait(false);
+                        }
+                        else if (threatListUpdateResponseResult.IsPartialUpdate) {
+                            // ...
+                            //
+                            // Modify an existing local copy of the threat list. This includes removing existing threats
+                            // and adding new threats.
+                            var threatsToAdd = threatListUpdateResponseResult.ThreatsToAdd;
+                            var threatsToRemove = threatListUpdateResponseResult.ThreatsToRemove;
+                            var modifyThreatListTask = memoryDatabase.ModifyThreatListAsync(threatList, threatsToAdd, threatsToRemove);
+                            await modifyThreatListTask.ConfigureAwait(false);
+                        }
+
+                        // ...
+                        //
+                        // Compute the local threat list's checksum, after we either stored it for the first time or
+                        // modified it.
+                        //
+                        // Throws an exception if the operation fails.
+                        var localThreatListChecksumTask = memoryDatabase.ComputeThreatListChecksumAsync(threatList.Descriptor);
+                        var localThreatListChecksum = await localThreatListChecksumTask.ConfigureAwait(false);
+                        if (localThreatListChecksum != threatListUpdateResponseResult.RetrievedThreatListChecksum) {
+                            // ...
+                            //
+                            // Boo, the local threat list's checksum does not match the remote threat list's checksum.
+                            // This indicates the local threat list is corrupt and cannot be trusted until it is
+                            // retrieved again.
+                            //
+                            // With the out-of-the-box databases provided by Safe Browsing.NET, this corruption will
+                            // very rarely occur, if ever, but its always best practice to check for it.
+                        }
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+                catch (BrowsingDatabaseException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a database error.
+                }
+            }
+        }
+    }
+}
+</code></pre><h2 id="example-using-a-json-database-to-store-retrieved-threat-lists">Example: Using a JSON Database to Store Retrieved Threat Lists</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using Gee.External.Browsing.Databases;
+using Gee.External.Browsing.Databases.Json;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Get Threat List Descriptors.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;client&quot;&gt;
+        ///     A &lt;see cref=&quot;IBrowsingClient&quot; /&gt;.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A collection of &lt;see cref=&quot;ThreatListDescriptor&quot; /&gt;.
+        /// &lt;/returns&gt;
+        /// &lt;exception cref=&quot;Gee.External.Browsing.Clients.BrowsingClientException&quot;&gt;
+        ///     Thrown if an error communicating with the Google Safe Browsing API occurs.
+        /// &lt;/exception&gt;
+        /// &lt;exception cref=&quot;System.TimeoutException&quot;&gt;
+        ///     Thrown if communication with the Google Safe Browsing API times out.
+        /// &lt;/exception&gt;
+        private static Task&lt;IEnumerable&lt;ThreatListDescriptor&gt;&gt; GetThreatListDescriptorsAsync(IBrowsingClient client) {
+            var getThreatListDescriptorsTask = client.GetThreatListDescriptorsAsync(CancellationToken.None);
+            return getThreatListDescriptorsTask;
+        }
+
+        /// &lt;summary&gt;
+        ///     Get Threat List Updates.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;client&quot;&gt;
+        ///     A &lt;see cref=&quot;IBrowsingClient&quot; /&gt;.
+        /// &lt;/param&gt;
+        /// &lt;param name=&quot;threatListDescriptors&quot;&gt;
+        ///     A collection of &lt;see cref=&quot;ThreatListDescriptor&quot; /&gt; identifying the &lt;see cref=&quot;ThreatList&quot; /&gt; to
+        ///     retrieve.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A &lt;see cref=&quot;ThreatListUpdateResponse&quot; /&gt;.
+        /// &lt;/returns&gt;
+        /// &lt;exception cref=&quot;Gee.External.Browsing.Clients.BrowsingClientException&quot;&gt;
+        ///     Thrown if an error communicating with the Google Safe Browsing API occurs.
+        /// &lt;/exception&gt;
+        /// &lt;exception cref=&quot;System.TimeoutException&quot;&gt;
+        ///     Thrown if communication with the Google Safe Browsing API times out.
+        /// &lt;/exception&gt;
+        private static Task&lt;ThreatListUpdateResponse&gt; GetThreatListUpdatesAsync(IBrowsingClient client, IEnumerable&lt;ThreatListDescriptor&gt; threatListDescriptors) {
+            var requestBuilder = ThreatListUpdateRequest.Build();
+            foreach (var threatListDescriptor in threatListDescriptors) {
+                // ...
+                //
+                // Add the threat list descriptor to the request so you can retrieve it as a full update.
+                requestBuilder.AddQuery(b =&gt; {
+                    b.SetThreatListDescriptor(threatListDescriptor);
+                    return b.Build();
+                });
+            }
+
+            var request = requestBuilder.Build();
+            var getThreatListUpdatesTask = client.GetThreatListUpdatesAsync(request, CancellationToken.None);
+            return getThreatListUpdatesTask;
+        }
+
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static async Task Main(string[] args) {
+            // ...
+            //
+            // Create an HTTP client to communicate with the Google Safe Browsing API. Create a JSON database to store
+            // retrieved threat lists in-memory and persist them to disk as JSON. When the process starts, if the file
+            // exists on disk, it will load the file in memory. When the process terminates, the data is not lost
+            // because it is persisted to disk. Depending on how many threat lists you retrieve, this can consume a
+            // very large amount of memory.
+            using (var httpClient = new HttpBrowsingClient(&quot;YOUR_GOOGLE_API_KEY&quot;))
+            using (var jsonDatabase = new ManagedJsonBrowsingDatabase(&quot;/Google.json&quot;)) {
+                try {
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListDescriptorsTask = Program.GetThreatListDescriptorsAsync(httpClient);
+                    var threatListDescriptors = await getThreatListDescriptorsTask.ConfigureAwait(false);
+
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListUpdatesTask = Program.GetThreatListUpdatesAsync(httpClient, threatListDescriptors);
+                    var threatListUpdateResponse = await getThreatListUpdatesTask.ConfigureAwait(false);
+                    foreach (var threatListUpdateResponseResult in threatListUpdateResponse.Results) {
+                        var threatList = threatListUpdateResponseResult.RetrievedThreatList;
+                        if (threatListUpdateResponseResult.IsFullUpdate) {
+                            // ...
+                            //
+                            // Store a local copy of the threat list. If the threat list already exists in the
+                            // database, it will be replaced in its entirety.
+                            //
+                            // Throws an exception if the operation fails.
+                            var threatsToAdd = threatListUpdateResponseResult.ThreatsToAdd;
+                            var storeThreatListTask = jsonDatabase.StoreThreatListAsync(threatList, threatsToAdd);
+                            await storeThreatListTask.ConfigureAwait(false);
+                        }
+                        else if (threatListUpdateResponseResult.IsPartialUpdate) {
+                            // ...
+                            //
+                            // Modify an existing local copy of the threat list. This includes removing existing threats
+                            // and adding new threats.
+                            var threatsToAdd = threatListUpdateResponseResult.ThreatsToAdd;
+                            var threatsToRemove = threatListUpdateResponseResult.ThreatsToRemove;
+                            var modifyThreatListTask = jsonDatabase.ModifyThreatListAsync(threatList, threatsToAdd, threatsToRemove);
+                            await modifyThreatListTask.ConfigureAwait(false);
+                        }
+
+                        // ...
+                        //
+                        // Compute the local threat list's checksum, after we either stored it for the first time or
+                        // modified it.
+                        //
+                        // Throws an exception if the operation fails.
+                        var localThreatListChecksumTask = jsonDatabase.ComputeThreatListChecksumAsync(threatList.Descriptor);
+                        var localThreatListChecksum = await localThreatListChecksumTask.ConfigureAwait(false);
+                        if (localThreatListChecksum != threatListUpdateResponseResult.RetrievedThreatListChecksum) {
+                            // ...
+                            //
+                            // Boo, the local threat list's checksum does not match the remote threat list's checksum.
+                            // This indicates the local threat list is corrupt and cannot be trusted until it is
+                            // retrieved again.
+                            //
+                            // With the out-of-the-box databases provided by Safe Browsing.NET, this corruption will
+                            // very rarely occur, if ever, but its always best practice to check for it.
+                        }
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+                catch (BrowsingDatabaseException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a database error.
+                }
+            }
+        }
+    }
+}
+</code></pre></article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

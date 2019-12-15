@@ -1,0 +1,80 @@
+using Gee.External.Browsing;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// <summary>
+    ///     Main Program.
+    /// </summary>
+    public static class Program {
+        /// <summary>
+        ///     Execute Main Program.
+        /// </summary>
+        /// <param name="args">
+        ///     A collection of arguments passed from the command line.
+        /// </param>
+        /// <returns>
+        ///     A task representing the asynchronous operation
+        /// </returns>
+        public static async Task Main(string[] args) {
+            var httpClient = new HttpBrowsingClient("YOUR_GOOGLE_API_KEY");
+            using (httpClient) {
+                try {
+                    // ...
+                    //
+                    // Build a request to retrieve two threat lists as a full update. A full update refers to
+                    // retrieving the threat lists in their entirety.
+                    var request = ThreatListUpdateRequest.Build()
+                        .AddQuery(b => {
+                            b.SetThreatListDescriptor(ThreatType.Malware, PlatformType.Linux, ThreatEntryType.Url);
+                            return b.Build();
+                        })
+                        .AddQuery(b => {
+                            b.SetThreatListDescriptor(ThreatType.Malware, PlatformType.Windows, ThreatEntryType.Url);
+                            return b.Build();
+                        })
+                        .Build();
+
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListUpdatesTask = httpClient.GetThreatListUpdatesAsync(request, CancellationToken.None);
+                    var response = await getThreatListUpdatesTask.ConfigureAwait(false);
+                    foreach (var responseResult in response.Results) {
+                        // ...
+                        //
+                        // There will be one retrieved threat list for each one requested. Its checksum is a SHA256
+                        // hash formatted as a hexadecimal encoded string.
+                        //
+                        // The threat list's state will help you to subsequently retrieve the threat list as a partial
+                        // update. It is an opaque value formatted as a hexadecimal encoded string.
+                        var retrievedThreatList = responseResult.RetrievedThreatList;
+                        var retrievedThreatListChecksum = responseResult.RetrievedThreatListChecksum;
+                        var retrievedThreatListState = retrievedThreatList.State;
+
+                        // ...
+                        //
+                        // The retrieved threat list's wait to date, if not a null reference, indicates the date you
+                        // MUST wait to before retrieving the threat list from the Google Safe Browsing API again.
+                        var retrievedThreatListWaitToDate = responseResult.RetrievedThreatList.WaitToDate;
+                        foreach (var threatToAdd in responseResult.ThreatsToAdd) {
+                            // ...
+                            //
+                            // Do something with each threat associated with the retrieved threat list. Each threat
+                            // that is associated with the retrieved threat list is identified using a SHA256 hash
+                            // formatted as a hexadecimal encoded string.
+                        }
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+            }
+        }
+    }
+}

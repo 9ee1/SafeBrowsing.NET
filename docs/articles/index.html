@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Safe Browsing.NET </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Safe Browsing.NET ">
+    <meta name="generator" content="docfx 2.48.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="safe-browsingnet">Safe Browsing.NET</h1>
+
+<p>Safe Browsing.NET is an opinionated .NET implementation of the
+<a href="https://developers.google.com/safe-browsing">Google Safe Browsing API</a>. It is written in C#, supports
+<a href="https://developers.google.com/safe-browsing/v4">Google Safe Browsing API 4</a>, and has a flexible and modular API that
+is ridiculously easy to learn, pick up, and extend.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Safe Browsing.NET supports any
+<a href="https://docs.microsoft.com/en-us/dotnet/standard/net-standard#net-implementation-support">.NET Runtime</a> that
+supports <a href="https://github.com/dotnet/standard/blob/master/docs/versions/netstandard2.0.md">.NET Standard 2.0</a></li>
+<li>Safe Browsing.NET supports <a href="https://developers.google.com/safe-browsing/v4">Google Safe Browsing API 4</a></li>
+<li>Safe Browsing.NET has a flexible and modular API that is ridiculously easy to learn, pick up, and extend</li>
+<li>Safe Browsing.NET is flexible. Want an HTTP client to simply communicate with the Google Safe Browsing API and handle
+the response yourself? Safe Browsing.NET has you covered. Want a service to setup and manage a threat database for
+you? That's covered too</li>
+<li>Safe Browsing.NET is modular. Unhappy with the default HTTP client implementation and want to implement one yourself?
+Safe Browsing.NET has you covered. Want to implement support for a database engine that is not natively supported?
+That's covered too</li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li>Safe Browsing.NET <strong>only implements</strong> the
+<a href="https://developers.google.com/safe-browsing/v4/update-api">Google Safe Browsing Update API</a>. It
+<strong>does not implement</strong> the
+<a href="https://developers.google.com/safe-browsing/v4/lookup-api">Google Safe Browsing Lookup API</a>. Typically, this should
+not be a problem because Safe Browsing.NET has APIs that will setup and manage for you the threat database required
+by the Google Safe Browsing Update API. Additionally, the Google Safe Browsing Update API is generally considered
+more private since URLs that are looked up will not be shared with Google</li>
+<li>Safe Browsing.NET <strong>does not implement</strong>
+<a href="https://developers.google.com/safe-browsing/v4/compression">Rice compression</a> when retrieving
+<a href="https://developers.google.com/safe-browsing/v4/lists">threat lists</a> from the Google Safe Browsing API. However, it
+<strong>does implement</strong> standard HTTP compression and will automatically set the correct HTTP compression request headers
+when retrieving threat lists from the Google Safe Browsing API</li>
+<li>Safe Browsing.NET <strong>does not implement</strong>
+<a href="https://developers.google.com/safe-browsing/v4/request-frequency#back-off-mode">back-off mode</a> if communication with
+the Google Safe Browsing API fails. You should consider implementing this feature yourself in your application until
+such time it is implemented natively by Safe Browsing.NET</li>
+</ul>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>Safe Browsing.NET is an independently developed project. It is not a Google developed nor is it a Google sponsored
+project. It is not affiliated with Google in any way.</p>
+<h2 id="getting-started">Getting started</h2>
+<h3 id="create-a-google-account">Create a Google Account</h3>
+<p>You'll need to create a Google account, a Google Developer Console project, a Google Safe Browsing API Key, and
+activate the Google Safe Browsing API within your Google Developer Console project. For more information, please see
+the <a href="https://developers.google.com/safe-browsing/v4/get-started">Google Safe Browsing API documentation</a>.</p>
+<p>You should review the Google Safe Browsing API Terms of Service to avoid having your account disabled by Google. For
+more information, please see the
+<a href="https://developers.google.com/safe-browsing/v4/terms">Google Safe Browsing API documentation</a>.</p>
+<p>Google enforces usage limits on consumers of the Google Safe Browsing API. You should review these usage limits to
+avoid having your account disabled by Google. For more information, please see the
+<a href="https://developers.google.com/safe-browsing/v4/usage-limits">Google Safe Browsing API documentation</a>.</p>
+<h3 id="download-safe-browsingnet">Download Safe Browsing.NET</h3>
+<p>Safe Browsing.NET is distributed as a <a href="https://www.nuget.org/packages/Gee.External.Browsing/">NuGet package</a>. Either
+open the NuGet Package Manager in Visual Studio and search for &quot;Safe Browsing.NET&quot; or head over to the
+<a href="https://www.nuget.org/packages/Gee.External.Browsing/">NuGet website</a> and download the NuGet package yourself.</p>
+<p>The current version is a <em>pre-release version</em>. Please make sure you select <em>include prerelease</em> in the NuGet Package
+Manager in Visual Studio in order to install it. For more information, please see the
+<a href="https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages">NuGet documentation</a>.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

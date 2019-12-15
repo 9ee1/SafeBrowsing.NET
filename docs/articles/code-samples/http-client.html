@@ -1,0 +1,446 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>HTTP Client Code Samples </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="HTTP Client Code Samples ">
+    <meta name="generator" content="docfx 2.48.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="http-client-code-samples">HTTP Client Code Samples</h1>
+
+<p>An <code>HTTP Client</code> is the default implementation of a <code>Client</code> in Safe Browsing.NET that allows you to communicate with
+the Google Safe Browsing API.</p>
+<p>If you're using a <code>Service</code>, whether a <code>Managed Service</code> or an <code>Unmanaged Service</code>, you'll typically never use an
+<code>HTTP Client</code> directly because the <code>Managed Service</code> will communicate with the Google Safe Browsing API for you
+internally. If you wish, however, to communicate with the Google Safe Browsing API manually, you should consider using
+an <code>HTTP Client</code> as opposed to building your own.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>To follow along with these examples, please see the
+<a class="xref" href="../../api/Gee.External.Browsing.Clients.html">Gee.External.Browsing.Clients</a> and the
+<a class="xref" href="../../api/Gee.External.Browsing.Clients.Http.html">Gee.External.Browsing.Clients.Http</a> namespaces and in particular
+<a class="xref" href="../../api/Gee.External.Browsing.Clients.Http.HttpBrowsingClient.html">HttpBrowsingClient</a> in the
+<a class="xref" href="../../api/Gee.External.Browsing.html">Safe Browsing.NET API reference</a>.</p>
+</div>
+<h2 id="example-retrieve-all-available-threat-list-descriptors">Example: Retrieve All Available Threat List Descriptors</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static async Task Main(string[] args) {
+            var httpClient = new HttpBrowsingClient(&quot;YOUR_GOOGLE_API_KEY&quot;);
+            using (httpClient) {
+                try {
+                    var getThreatListDescriptorsTask = httpClient.GetThreatListDescriptorsAsync(CancellationToken.None);
+                    var threatListDescriptors = await getThreatListDescriptorsTask.ConfigureAwait(false);
+                    foreach (var threatListDescriptor in threatListDescriptors) {
+                        // ...
+                        //
+                        // Do something with each threat list descriptor.
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+            }
+        }
+    }
+}
+</code></pre><h2 id="example-retrieve-threat-list-full-updates">Example: Retrieve Threat List Full Updates</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static async Task Main(string[] args) {
+            var httpClient = new HttpBrowsingClient(&quot;YOUR_GOOGLE_API_KEY&quot;);
+            using (httpClient) {
+                try {
+                    // ...
+                    //
+                    // Build a request to retrieve two threat lists as a full update. A full update refers to
+                    // retrieving the threat lists in their entirety.
+                    var request = ThreatListUpdateRequest.Build()
+                        .AddQuery(b =&gt; {
+                            b.SetThreatListDescriptor(ThreatType.Malware, PlatformType.Linux, ThreatEntryType.Url);
+                            return b.Build();
+                        })
+                        .AddQuery(b =&gt; {
+                            b.SetThreatListDescriptor(ThreatType.Malware, PlatformType.Windows, ThreatEntryType.Url);
+                            return b.Build();
+                        })
+                        .Build();
+
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListUpdatesTask = httpClient.GetThreatListUpdatesAsync(request, CancellationToken.None);
+                    var response = await getThreatListUpdatesTask.ConfigureAwait(false);
+                    foreach (var responseResult in response.Results) {
+                        // ...
+                        //
+                        // There will be one retrieved threat list for each one requested. Its checksum is a SHA256
+                        // hash formatted as a hexadecimal encoded string.
+                        //
+                        // The threat list's state will help you to subsequently retrieve the threat list as a partial
+                        // update. It is an opaque value formatted as a hexadecimal encoded string.
+                        var retrievedThreatList = responseResult.RetrievedThreatList;
+                        var retrievedThreatListChecksum = responseResult.RetrievedThreatListChecksum;
+                        var retrievedThreatListState = retrievedThreatList.State;
+
+                        // ...
+                        //
+                        // The retrieved threat list's wait to date, if not a null reference, indicates the date you
+                        // MUST wait to before retrieving the threat list from the Google Safe Browsing API again.
+                        var retrievedThreatListWaitToDate = responseResult.RetrievedThreatList.WaitToDate;
+                        foreach (var threatToAdd in responseResult.ThreatsToAdd) {
+                            // ...
+                            //
+                            // Do something with each threat associated with the retrieved threat list. Each threat
+                            // that is associated with the retrieved threat list is identified using a SHA256 hash
+                            // formatted as a hexadecimal encoded string.
+                        }
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+            }
+        }
+    }
+}
+</code></pre><h2 id="example-retrieve-threat-list-full-updates-with-update-constraints">Example: Retrieve Threat List Full Updates With Update Constraints</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static async Task Main(string[] args) {
+            var httpClient = new HttpBrowsingClient(&quot;YOUR_GOOGLE_API_KEY&quot;);
+            using (httpClient) {
+                try {
+                    // ...
+                    //
+                    // Build a request to retrieve one threat list as a full update with update constraints. A full
+                    // update refers to retrieving the threat lists in their entirety, subject to the update
+                    // constraints that are applied.
+                    var request = ThreatListUpdateRequest.Build()
+                        .AddQuery(b =&gt; {
+                            b.SetThreatListDescriptor(ThreatType.Malware, PlatformType.Linux, ThreatEntryType.Url);
+                            b.SetUpdateConstraints(bb =&gt; {
+                                bb.SetMaximumDatabaseEntries(4096);
+                                return bb.Build();
+                            });
+
+                            return b.Build();
+                        })
+                        .Build();
+
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListUpdatesTask = httpClient.GetThreatListUpdatesAsync(request, CancellationToken.None);
+                    var response = await getThreatListUpdatesTask.ConfigureAwait(false);
+                    foreach (var responseResult in response.Results) {
+                        // ...
+                        //
+                        // There will be one retrieved threat list for each one requested. Its checksum is a SHA256
+                        // hash formatted as a hexadecimal encoded string.
+                        //
+                        // The threat list's state will help you to subsequently retrieve the threat list as a partial
+                        // update. It is an opaque value formatted as a hexadecimal encoded string.
+                        var retrievedThreatList = responseResult.RetrievedThreatList;
+                        var retrievedThreatListChecksum = responseResult.RetrievedThreatListChecksum;
+                        var retrievedThreatListState = retrievedThreatList.State;
+
+                        // ...
+                        //
+                        // The retrieved threat list's wait to date, if not a null reference, indicates the date you
+                        // MUST wait to before retrieving the threat list from the Google Safe Browsing API again.
+                        var retrievedThreatListWaitToDate = responseResult.RetrievedThreatList.WaitToDate;
+                        foreach (var threatToAdd in responseResult.ThreatsToAdd) {
+                            // ...
+                            //
+                            // Do something with each threat associated with the retrieved threat list. Each threat
+                            // that is associated with the retrieved threat list is identified using a SHA256 hash
+                            // formatted as a hexadecimal encoded string.
+                        }
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+            }
+        }
+    }
+}
+</code></pre><h2 id="example-retrieve-threat-list-partial-updates">Example: Retrieve Threat List Partial Updates</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static async Task Main(string[] args) {
+            var httpClient = new HttpBrowsingClient(&quot;YOUR_GOOGLE_API_KEY&quot;);
+            using (httpClient) {
+                try {
+                    // ...
+                    //
+                    // Build a request to retrieve two threat lists. One of the threat lists will be retrieved as a
+                    // partial update. One will be retrieved as a full update.
+                    //
+                    // By specifying a state, you are retrieving the threat list as a partial update. A partial update
+                    // refers to retrieving only updates to a threat list since the last time you retrieved it as a full
+                    // update. In other words, you want to retrieve a computed difference between your local copy of
+                    // the threat list and Google's remote copy of the threat list as of the time you send the request.
+                    var request = ThreatListUpdateRequest.Build()
+                        .AddQuery(b =&gt; {
+                            b.SetThreatListDescriptor(ThreatType.Malware, PlatformType.Linux, ThreatEntryType.Url);
+                            b.SetThreatListState(&quot;AABBCC&quot;);
+                            return b.Build();
+                        })
+                        .AddQuery(b =&gt; {
+                            b.SetThreatListDescriptor(ThreatType.Malware, PlatformType.Windows, ThreatEntryType.Url);
+                            return b.Build();
+                        })
+                        .Build();
+
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListUpdatesTask = httpClient.GetThreatListUpdatesAsync(request, CancellationToken.None);
+                    var response = await getThreatListUpdatesTask.ConfigureAwait(false);
+                    foreach (var responseResult in response.Results) {
+                        // ...
+                        //
+                        // There will be one retrieved threat list for each one requested. Its checksum is a SHA256
+                        // hash formatted as a hexadecimal encoded string.
+                        //
+                        // The threat list's state will help you to subsequently retrieve the threat list as a partial
+                        // update. It is an opaque value formatted as a hexadecimal encoded string.
+                        var retrievedThreatList = responseResult.RetrievedThreatList;
+                        var retrievedThreatListChecksum = responseResult.RetrievedThreatListChecksum;
+                        var retrievedThreatListState = retrievedThreatList.State;
+
+                        // ...
+                        //
+                        // The threat list's wait to date, if not a null reference, indicates the date you MUST wait to
+                        // before retrieving the threat list from the Google Safe Browsing API again.
+                        var retrievedThreatListWaitToDate = responseResult.RetrievedThreatList.WaitToDate;
+
+                        if (responseResult.IsFullUpdate) {
+                            // ...
+                            //
+                            // If the threat list is retrieved as a full update, there will only be threats identified
+                            // for addition to your local copy of it.
+                            foreach (var threatToAdd in responseResult.ThreatsToAdd) {
+                                // ...
+                                //
+                                // Store each threat identified for addition to your local copy of the threat list.
+                                // Each threat is identified using a SHA256 hash formatted as a hexadecimal encoded
+                                // string.
+                            }
+                        }
+                        else if (responseResult.IsPartialUpdate) {
+                            // ...
+                            //
+                            // If the threat list is retrieved as a partial update, there will be threats identified
+                            // for addition to and removal from your local copy of it.
+                            //
+                            // You MUST FIRST remove the threats identified for removal BEFORE adding the threats
+                            // identified for addition.
+                            foreach (var threatToRemove in responseResult.ThreatsToRemove) {
+                                // ...
+                                //
+                                // Remove each threat identified for removal from your local copy of the threat list.
+                                // Each threat is identified using a zero-based index. You'll need to lexicographically
+                                // sort your local copy of the threat list before you're able to remove the threats
+                                // identified for removal.
+                            }
+
+                            foreach (var threatToAdd in responseResult.ThreatsToAdd) {
+                                // ...
+                                //
+                                // Store each threat identified for addition to your local copy of the threat list.
+                                // Each threat is identified using a SHA256 hash formatted as a hexadecimal encoded
+                                // string.
+                            }
+                        }
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+            }
+        }
+    }
+}
+</code></pre></article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

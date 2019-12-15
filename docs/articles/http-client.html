@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Querying The Google Safe Browsing API </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Querying The Google Safe Browsing API ">
+    <meta name="generator" content="docfx 2.48.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="querying-the-google-safe-browsing-api">Querying The Google Safe Browsing API</h1>
+
+<p>Querying the Google Safe Browsing API simply means that you want to manually query the Google Safe Browsing API REST
+endpoints and handle the responses yourself. This gives you the most flexibility on how you want to handle the data
+provided by the Google Safe Browsing API however it does mean that you would need to, effectively, implement the
+<a href="https://developers.google.com/safe-browsing/v4/update-api">Google Safe Browsing Update API</a> protocol yourself. Safe
+Browsing.NET has an HTTP client, aptly named
+<a class="xref" href="../api/Gee.External.Browsing.Clients.Http.HttpBrowsingClient.html">HttpBrowsingClient</a>, that you can use to query the Google
+Safe Browsing API.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Safe Browsing.NET <strong>only implements</strong> the
+<a href="https://developers.google.com/safe-browsing/v4/update-api">Google Safe Browsing Update API</a>. It
+<strong>does not implement</strong> the
+<a href="https://developers.google.com/safe-browsing/v4/lookup-api">Google Safe Browsing Lookup API</a>. As such, the only
+methods declared by <code>HttpBrowsingClient</code> are the ones that relevant to the Google Safe Browsing Update API.</p>
+</div>
+<h2 id="how-to-retrieve-available-threat-list-descriptors">How To: Retrieve Available Threat List Descriptors</h2>
+<p>Threat lists are Google's constantly updated lists of unsafe web resources. Examples of unsafe web resources are social
+engineering sites (deceptive and phishing sites) and sites that host malware or unwanted software. Threat lists are
+identified using a <a class="xref" href="../api/Gee.External.Browsing.ThreatListDescriptor.html">ThreatListDescriptor</a>. A threat list is identified
+using a <a class="xref" href="../api/Gee.External.Browsing.ThreatType.html">ThreatType</a>, which indicates the nature of its associated threats, a
+<a class="xref" href="../api/Gee.External.Browsing.PlatformType.html">PlatformType</a>, which indicates the platform its associated threats target,
+and a <a class="xref" href="../api/Gee.External.Browsing.ThreatEntryType.html">ThreatEntryType</a>, which indicates how its associated threats is
+posed.</p>
+<p>Once you have a collection of available threat lists descriptors, you can then use them to further query the Google
+Safe Browsing API and retrieve the threats that are associated with them.</p>
+<h2 id="retrieving-threat-list-updates">Retrieving Threat List Updates</h2>
+<p>Retrieving threat list updates refers to:</p>
+<ol>
+<li>Querying the Google Safe Browsing API for a collection of threats associated with one or more threat lists</li>
+<li>Storing those threats in a database (herein referred to as a threat database) for a specified time</li>
+<li>Subsequently querying the Google Safe Browsing API again, in periodic intervals, for updates to those threat lists
+you initially retrieved.</li>
+</ol>
+<blockquote>
+<p>Retrieved threats are identified using a SHA256 hash (herein referred to as threat hash prefix) that is between 4 to
+32 bytes in length. Safe Browsing.NET encodes threat hash prefixes in hexadecimal for simplified handling and
+identification.</p>
+</blockquote>
+<p>The intent of a threat database is so that after you set it up, you can query it, instead of the Google Safe Browsing
+API, to determine if a URL is safe or unsafe. The implementation of a threat database could be anything you choose
+(e.g. in-memory data structure, SQLite, SQL Server, et al.)</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Safe Browsing.NET has out-of-the-box implementations for an in-memory threat database and a file based threat
+database that is persisted to disk as JSON. These implementations should satisfy the majority of use cases if you do
+not want to implement your own threat database. For more information, please see
+<a class="xref" href="../api/Gee.External.Browsing.Databases.Json.ManagedJsonBrowsingDatabase.html">ManagedJsonBrowsingDatabase</a> and
+<a class="xref" href="../api/Gee.External.Browsing.Databases.MemoryBrowsingDatabase.html">MemoryBrowsingDatabase</a> in the
+<a class="xref" href="../api/Gee.External.Browsing.html">Safe Browsing.NET API reference</a>.</p>
+</div>
+<p>Threat list updates are retrieved as either <em>full</em> or as <em>partial</em> updates. A <em>full update</em> means you want to retrieve
+a threat list in its entirety. A <em>partial update</em> means you want to retrieve updates to a threat list since the last
+time you retrieved it as a <em>full update</em>.</p>
+<h3 id="learn-full-vs-partial-threat-list-updates">Learn: Full vs. Partial Threat List Updates</h3>
+<p>When you retrieve a threat list from the Google Safe Browsing API, you have the option to retrieve it as either a full
+or a partial update. Retrieving a threat list as a full update refers to retrieving it in its entirety. In other words,
+you want to retrieve all of its associated threats as of the time you send the request.</p>
+<p>Retrieving a threat list as a partial update refers to retrieving only updates to it since the last time you retrieved
+it as a full update. In other words, you want to retrieve a computed difference between your local copy of the threat
+list and Google's remote copy of the threat list as of the time you send the request. The computed difference will
+indicate which of the threat list's associated threats you <strong>must</strong> remove from and which threats you <strong>must</strong> add to
+your local copy of the threat list.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>As a rule of thumb, the first time you retrieve a threat list, you will always retrieve it as a full update.
+Subsequently, with very few exceptions, you will always retrieve it as a partial update.</p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Technically, there is nothing stopping you from retrieving a threat list as a full update every time or any time you
+want. Doing so, however, is an incredible waste of resources.</p>
+</div>
+<h3 id="learn-what-is-a-threat-list-checksum">Learn: What is a Threat List Checksum?</h3>
+<p>When you retrieve a threat list from the Google Safe Browsing API, regardless of whether it is retrieved as a full or
+partial update, the returned response includes a <code>checksum</code> (herein referred to as <code>threat list checksum</code> or a <code>threat list's checksum</code>). A <code>threat list's checksum</code> is used to verify your local copy of the threat list after you store it
+in your threat database.</p>
+<p>After you store a retrieved threat list in your threat database, you <strong>must</strong> compute its <code>checksum</code> and compare it
+with the <code>checksum</code> included in the response. If the two values match, your local copy of the threat list is considered
+correct. If the two values do not match, your local copy of the threat list is considered corrupt. If your local copy
+of the threat list is corrupt, you <strong>must</strong> disregard (i.e. delete it from your threat database) it in its entirety and
+retrieve it again as a full update.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Safe Browsing.NET expresses a <code>threat list's checksum</code> as a hexadecimal encoded string.</p>
+</div>
+<h4 id="how-to-compute-a-threat-list-checksum">How To: Compute a Threat List Checksum</h4>
+<div class="NOTE">
+<h5>Note</h5>
+<p>If you use one of the threat databases provided out-of-the-box by Safe Browsing.NET, such as
+<a class="xref" href="../api/Gee.External.Browsing.Databases.MemoryBrowsingDatabase.html">MemoryBrowsingDatabase</a>, there is an extension method
+to compute a <code>threat list's checksum</code> so that you don't have to do it yourself. For more information, please see
+<a href="xref:Gee.External.Browsing.Databases.BrowsingDatabaseExtension">BrowsingDatabaseExtension</a> in the
+<a class="xref" href="../api/Gee.External.Browsing.html">Safe Browsing.NET API reference</a>.</p>
+</div>
+<h3 id="learn-what-is-a-threat-list-state">Learn: What is a Threat List State?</h3>
+<p>When you retrieve a threat list from the Google Safe Browsing API, regardless of whether it is retrieved as a full or
+partial update, the returned response includes a <code>state</code> (herein referred to as <code>threat list state</code> or a <code>threat list's state</code>). A <code>threat list's state</code> is an opaque value indicating a snapshot in time when it was retrieved.</p>
+<p>The first time you retrieve a threat list, you will always retrieve it as a full update. This is accomplished by not
+including a <code>threat list state</code> in the request to the Google Safe Browsing API. You <strong>must</strong> store the retrieved
+<code>threat list's state</code>, preferably in your threat database, that is included in the returned response so that you can
+subsequently retrieve the threat list as a partial update. This is accomplished by including the retrieved <code>threat list's state</code> in the subsequent request to the Google Safe Browsing API.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>As a rule of thumb, to retrieve a threat list as a full update, you <strong>must</strong> not include a <code>threat list state</code> in the
+request to the Google Safe Browsing API. To retrieve a threat list as a partial update, you <strong>must</strong> include a
+<code>threat list state</code> in the request.</p>
+</div>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Even though a <code>threat list's state</code> is an opaque value, Safe Browsing.NET expresses it as a hexadecimal encoded
+string.</p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>As a rule of thumb, you <strong>must</strong> store a retrieved <code>threat list's state</code>, preferably in your threat database. If you
+do not, you will never be able to subsequently retrieve the threat list as a partial update.</p>
+</div>
+<h3 id="learn-what-are-threat-list-update-constraints">Learn: What are Threat List Update Constraints?</h3>
+<p>When you retrieve a threat list from the Google Safe Browsing API, regardless of whether it is retrieved as a full or
+partial update, you have the option to include update constraints in the request to the Google Safe Browsing API to
+limit the size of the data set or restrict the data set to a specific criteria that is included in the response. The
+data set included in the response is, effectively, the threats associated with the threat list.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>To better understand what update constraints you can include in a request to the Google Safe Browsing API, please see
+<a class="xref" href="../api/Gee.External.Browsing.Clients.ThreatListUpdateConstraintsBuilder.html">ThreatListUpdateConstraintsBuilder</a> in the
+<a class="xref" href="../api/Gee.External.Browsing.html">Safe Browsing.NET API reference</a>.</p>
+</div>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>As a rule of thumb, limiting the size of the data set included in a response from the Google Safe Browsing API
+<strong>will</strong> impact the effectiveness of the protection provided by the Google Safe Browsing API. You <strong>should only</strong>
+limit the size of the data set if you have resource constraints, such as memory. Typically, if you're building an
+application that will run on a PC or a server, you should not have resource constraints. For more information, please
+see the <a href="https://developers.google.com/safe-browsing/v4/update-constraints">Google Safe Browsing API documentation</a>.</p>
+</div>
+<h3 id="learn-what-is-a-threat-list-wait-to-date">Learn: What is a Threat List Wait to Date?</h3>
+<p>When you retrieve a threat list from the Google Safe Browsing API, regardless of whether it is retrieved as a full or
+partial update, the returned response might optionally include a <code>wait to date</code> (herein referred to as a <code>threat list's wait to date</code>). A <code>threat list's wait to date</code> is the date you <strong>must</strong> wait to before subsequently retrieving the
+threat list again.</p>
+<p>After you retrieve a threat list, you <strong>must</strong> store its <code>wait to date</code>,  preferably in your threat database, and avoid
+subsequently retrieving the threat list again until its <code>wait to date</code> has expired. A typical implementation approach
+to doing this might be to setup a timer that expires when the <code>threat list's wait to date</code> expires.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>Technically, there is nothing stopping you from subsequently retrieving a threat list before its <code>wait to date</code>.
+Doing so however, might subject your account to being disabled by Google. For more information, please see the
+<a href="https://developers.google.com/safe-browsing/v4/request-frequency#minimum-wait-duration">Google Safe Browsing API documentation</a>.</p>
+</div>
+<h3 id="how-to-retrieve-full-threat-list-updates">How To: Retrieve Full Threat List Updates</h3>
+<p>Retrieving a threat list as a full update refers to retrieving it in its entirety. In other words, you want to retrieve
+all of its associated threats as of the time you send the request.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>The first time you retrieve a threat list, you will always retrieve it as a full update.</p>
+</div>
+<p>After you retrieve a threat list as a full update, you <strong>should</strong>:</p>
+<ol>
+<li>If you already have a local copy of it in your threat database, disregard it (i.e. delete it from your threat
+database) in its entirety</li>
+<li>Store a local copy of it in your threat database, including its <code>state</code> and <code>wait to date</code></li>
+<li>Compute your local copy's <code>checksum</code> and compare it to the <code>checksum</code> included in the response from the Google Safe
+Browsing API. If the two values match, your local copy is considered correct. If the two values do not match, your
+local copy is considered corrupt. If your local copy is corrupt, you must disregard (i.e. delete it from your threat
+database) it in its entirety and retrieve it again as a full update</li>
+<li>Subsequently, when you retrieve the threat list again, retrieve it as a partial update unless it becomes corrupt</li>
+<li>Refrain from subsequently retrieving the threat list again until its <code>wait to date</code> expires</li>
+</ol>
+<h3 id="how-to-retrieve-partial-threat-list-updates">How To: Retrieve Partial Threat List Updates</h3>
+<p>Retrieving a threat list as a partial update refers to retrieving only updates to it since the last time you retrieved
+it as a full update. In other words, you want to retrieve a computed difference between your local copy of the threat
+list and Google's remote copy of the threat list as of the time you send the request. The computed difference will
+indicate which of the threat list's associated threats you <strong>must</strong> remove from and which threats you <strong>must</strong> add to
+your local copy of the threat list.</p>
+<div class="NOTE">
+<h5>Note</h5>
+<p>You cannot retrieve a threat list as a partial update if you have never retrieved it as a full update.</p>
+</div>
+<p>After you retrieve a threat list as a partial update, you <strong>should</strong>:</p>
+<ol>
+<li>If the response from the Google Safe Browsing API includes a collection of threats to remove:
+<ol>
+<li>Lexicographically sort your local copy of the threat list if its not already sorted</li>
+<li>Delete the threats included in the response for removal from your local copy</li>
+</ol>
+</li>
+<li>If the response includes a collection of threats to add, add them to your local copy</li>
+<li>Update your local copy's <code>state</code> and <code>wait to date</code> with the values included in the response</li>
+<li>Compute your local copy's <code>checksum</code> and compare it to the <code>checksum</code> included in the response from the Google Safe
+Browsing API. If the two values match, your local copy is considered correct. If the two values do not match, your
+local copy is considered corrupt. If your local copy is corrupt, you must disregard (i.e. delete it from your threat
+database) it in its entirety and retrieve it again as a full update</li>
+<li>Subsequently, when you retrieve the threat list again, retrieve it as a partial update unless it becomes corrupt</li>
+<li>Refrain from subsequently retrieving the threat list again until its <code>wait to date</code> expires</li>
+</ol>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

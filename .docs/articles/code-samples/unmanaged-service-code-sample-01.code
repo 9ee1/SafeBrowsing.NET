@@ -1,0 +1,95 @@
+using Gee.External.Browsing.Cache;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Databases;
+using Gee.External.Browsing.Services;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// <summary>
+    ///     Main Program.
+    /// </summary>
+    public static class Program {
+        /// <summary>
+        ///     Execute Main Program.
+        /// </summary>
+        /// <param name="args">
+        ///     A collection of arguments passed from the command line.
+        /// </param>
+        /// <returns>
+        ///     A task representing the asynchronous operation
+        /// </returns>
+        public static async Task Main(string[] args) {
+            // ...
+            //
+            // Create an unmanaged service that uses an in-memory cache, a JSON database that is loaded from disk, and
+            // an HTTP client to communicate with the Google Safe Browsing API.
+            //
+            // The database is expected to be managed by some other mechanism, whether in the same process or a
+            // completely different process is up to you. So, in effect, an unmanaged service just queries a database.
+            var unmanagedService = UnmanagedBrowsingService.Build()
+                .UseMemoryCache()
+                .UseJsonDatabase("/Google.json")
+                .UseHttpClient("YOUR_GOOGLE_API_KEY")
+                .Build();
+
+            using (unmanagedService) {
+                try {
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    const string testUrl = "https://testsafebrowsing.appspot.com/s/phishing.html";
+                    var lookupTask = unmanagedService.LookupAsync(testUrl);
+                    var testUrlLookupResult = await lookupTask.ConfigureAwait(false);
+                    if (testUrlLookupResult.IsDatabaseStale) {
+                        // ...
+                        //
+                        // If the database is stale, you can't really do anything about it since there is a completely
+                        // different mechanism managing the database. You can either wait for a few minutes and try
+                        // again or assume the URL is safe.
+                    }
+                    else if (testUrlLookupResult.IsSafe) {
+                        // ...
+                        //
+                        // Yay, the URL is safe!
+                    }
+                    else if (testUrlLookupResult.IsUnsafe) {
+                        // ...
+                        //
+                        // If the URL is unsafe, retrieve the computed URL expression that indicated it is unsafe.
+                        var unsafeUrlExpression = testUrlLookupResult.UnsafeUrlExpression;
+
+                        // ...
+                        //
+                        // If the URL is unsafe, retrieve the collection of unsafe threat list descriptors the URL is
+                        // associated with.
+                        var unsafeThreatListDescriptors = testUrlLookupResult.UnsafeThreatListDescriptors;
+
+                        // ...
+                        //
+                        // If the URL is unsafe, you can use the collection of unsafe threat list descriptors the URL
+                        // is associated with to determine the target platforms and threat types. But you can also use
+                        // the following convenient properties to retrieve them.
+                        var targetPlatforms = testUrlLookupResult.TargetPlatforms;
+                        var threatTypes = testUrlLookupResult.ThreatTypes;
+                    }
+                }
+                catch (BrowsingCacheException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a caching error.
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+                catch (BrowsingDatabaseException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a database error.
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IManagedBrowsingDatabase
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IManagedBrowsingDatabase
+   ">
+    <meta name="generator" content="docfx 2.48.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Gee.External.Browsing.Databases.IManagedBrowsingDatabase">
+  
+  
+  <h1 id="Gee_External_Browsing_Databases_IManagedBrowsingDatabase" data-uid="Gee.External.Browsing.Databases.IManagedBrowsingDatabase" class="text-break">Interface IManagedBrowsingDatabase
+  </h1>
+  <div class="markdown level0 summary"><p>Abstract Managed Database.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.IUnmanagedBrowsingDatabase.html#Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_FindThreatListsAsync_System_String_System_Threading_CancellationToken_">IUnmanagedBrowsingDatabase.FindThreatListsAsync(String, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.IUnmanagedBrowsingDatabase.html#Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_GetThreatListAsync_Gee_External_Browsing_ThreatListDescriptor_System_Threading_CancellationToken_">IUnmanagedBrowsingDatabase.GetThreatListAsync(ThreatListDescriptor, CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.IUnmanagedBrowsingDatabase.html#Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_GetThreatListsAsync_System_Threading_CancellationToken_">IUnmanagedBrowsingDatabase.GetThreatListsAsync(CancellationToken)</a>
+    </div>
+    <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.IUnmanagedBrowsingDatabase.html#Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_GetThreatsAsync_Gee_External_Browsing_ThreatListDescriptor_System_Threading_CancellationToken_">IUnmanagedBrowsingDatabase.GetThreatsAsync(ThreatListDescriptor, CancellationToken)</a>
+    </div>
+    <div>
+      <span class="xref">System.IDisposable.Dispose()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Gee.External.Browsing.Databases.html">Gee.External.Browsing.Databases</a></h6>
+  <h6><strong>Assembly</strong>: Gee.External.Browsing.dll</h6>
+  <h5 id="Gee_External_Browsing_Databases_IManagedBrowsingDatabase_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IManagedBrowsingDatabase : IUnmanagedBrowsingDatabase, IDisposable</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="Gee_External_Browsing_Databases_IManagedBrowsingDatabase_ModifyThreatListAsync_" data-uid="Gee.External.Browsing.Databases.IManagedBrowsingDatabase.ModifyThreatListAsync*"></a>
+  <h4 id="Gee_External_Browsing_Databases_IManagedBrowsingDatabase_ModifyThreatListAsync_Gee_External_Browsing_ThreatList_System_Collections_Generic_IEnumerable_System_String__System_Collections_Generic_IEnumerable_System_Int32__System_Threading_CancellationToken_" data-uid="Gee.External.Browsing.Databases.IManagedBrowsingDatabase.ModifyThreatListAsync(Gee.External.Browsing.ThreatList,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Int32},System.Threading.CancellationToken)">ModifyThreatListAsync(ThreatList, IEnumerable&lt;String&gt;, IEnumerable&lt;Int32&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Modify a Threat List Asynchronously.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task ModifyThreatListAsync(ThreatList threatList, IEnumerable&lt;string&gt; threatSha256HashPrefixes, IEnumerable&lt;int&gt; threatIndices, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th style="width: 40%">Type</th>
+        <th style="width: 20%">Name</th>
+        <th style="width: 40%">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Gee.External.Browsing.ThreatList.html">ThreatList</a></td>
+        <td><span class="parametername">threatList</span></td>
+        <td><p>A <a class="xref" href="Gee.External.Browsing.ThreatList.html">ThreatList</a> to modify.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">threatSha256HashPrefixes</span></td>
+        <td><p>A collection of SHA256 hash prefixes, formatted as hexadecimal encoded strings, identifying the threats
+associated with <code data-dev-comment-type="paramref" class="paramref">threatList</code> and should be stored.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">threatIndices</span></td>
+        <td><p>A collection of zero-based indices identifying the threats associated with the lexicographically sorted
+<code data-dev-comment-type="paramref" class="paramref">threatList</code> and should be removed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>A cancellation token to cancel the asynchronous operation with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th style="width: 60%">Type</th>
+        <th style="width: 40%">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td><p>A task representing the asynchronous operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th style="width: 60%">Type</th>
+        <th style="width: 40%">Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Gee.External.Browsing.Databases.BrowsingDatabaseException.html">BrowsingDatabaseException</a></td>
+        <td><p>Thrown if a database error occurs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p>Thrown if <code data-dev-comment-type="paramref" class="paramref">threatList</code> is a null reference, or if
+<code data-dev-comment-type="paramref" class="paramref">threatSha256HashPrefixes</code> is a null reference, or if
+<code data-dev-comment-type="paramref" class="paramref">threatIndices</code> is a null reference.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p>Thrown if the object is disposed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.OperationCanceledException</span></td>
+        <td><p>Thrown if the asynchronous operation is cancelled.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Gee_External_Browsing_Databases_IManagedBrowsingDatabase_StoreThreatListAsync_" data-uid="Gee.External.Browsing.Databases.IManagedBrowsingDatabase.StoreThreatListAsync*"></a>
+  <h4 id="Gee_External_Browsing_Databases_IManagedBrowsingDatabase_StoreThreatListAsync_Gee_External_Browsing_ThreatList_System_Collections_Generic_IEnumerable_System_String__System_Threading_CancellationToken_" data-uid="Gee.External.Browsing.Databases.IManagedBrowsingDatabase.StoreThreatListAsync(Gee.External.Browsing.ThreatList,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">StoreThreatListAsync(ThreatList, IEnumerable&lt;String&gt;, CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Store a Threat List Asynchronously.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task StoreThreatListAsync(ThreatList threatList, IEnumerable&lt;string&gt; threatSha256HashPrefixes, CancellationToken cancellationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th style="width: 40%">Type</th>
+        <th style="width: 20%">Name</th>
+        <th style="width: 40%">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Gee.External.Browsing.ThreatList.html">ThreatList</a></td>
+        <td><span class="parametername">threatList</span></td>
+        <td><p>A <a class="xref" href="Gee.External.Browsing.ThreatList.html">ThreatList</a> to store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">threatSha256HashPrefixes</span></td>
+        <td><p>A collection of SHA256 hash prefixes, formatted as hexadecimal encoded strings, identifying the threats
+associated with <code data-dev-comment-type="paramref" class="paramref">threatList</code> and should be stored.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Threading.CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td><p>A cancellation token to cancel the asynchronous operation with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th style="width: 60%">Type</th>
+        <th style="width: 40%">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Threading.Tasks.Task</span></td>
+        <td><p>A task representing the asynchronous operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th style="width: 60%">Type</th>
+        <th style="width: 40%">Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Gee.External.Browsing.Databases.BrowsingDatabaseException.html">BrowsingDatabaseException</a></td>
+        <td><p>Thrown if a database error occurs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ArgumentNullException</span></td>
+        <td><p>Thrown if <code data-dev-comment-type="paramref" class="paramref">threatList</code> is a null reference, or if
+<code data-dev-comment-type="paramref" class="paramref">threatSha256HashPrefixes</code> is a null reference.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ObjectDisposedException</span></td>
+        <td><p>Thrown if the object is disposed.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.OperationCanceledException</span></td>
+        <td><p>Thrown if the asynchronous operation is cancelled.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.ManagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_ManagedBrowsingDatabaseExtension_ModifyThreatListAsync_Gee_External_Browsing_Databases_IManagedBrowsingDatabase_Gee_External_Browsing_ThreatList_System_Collections_Generic_IEnumerable_System_String__System_Collections_Generic_IEnumerable_System_Int32__">ManagedBrowsingDatabaseExtension.ModifyThreatListAsync(IManagedBrowsingDatabase, ThreatList, IEnumerable&lt;String&gt;, IEnumerable&lt;Int32&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.ManagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_ManagedBrowsingDatabaseExtension_StoreThreatListAsync_Gee_External_Browsing_Databases_IManagedBrowsingDatabase_Gee_External_Browsing_ThreatList_System_Collections_Generic_IEnumerable_System_String__">ManagedBrowsingDatabaseExtension.StoreThreatListAsync(IManagedBrowsingDatabase, ThreatList, IEnumerable&lt;String&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_UnmanagedBrowsingDatabaseExtension_ComputeThreatListChecksumAsync_Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_Gee_External_Browsing_ThreatListDescriptor_">UnmanagedBrowsingDatabaseExtension.ComputeThreatListChecksumAsync(IUnmanagedBrowsingDatabase, ThreatListDescriptor)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_UnmanagedBrowsingDatabaseExtension_ComputeThreatListChecksumAsync_Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_Gee_External_Browsing_ThreatListDescriptor_System_Threading_CancellationToken_">UnmanagedBrowsingDatabaseExtension.ComputeThreatListChecksumAsync(IUnmanagedBrowsingDatabase, ThreatListDescriptor, CancellationToken)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_UnmanagedBrowsingDatabaseExtension_FindThreatListsAsync_Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_System_String_">UnmanagedBrowsingDatabaseExtension.FindThreatListsAsync(IUnmanagedBrowsingDatabase, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_UnmanagedBrowsingDatabaseExtension_GetThreatListAsync_Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_Gee_External_Browsing_ThreatListDescriptor_">UnmanagedBrowsingDatabaseExtension.GetThreatListAsync(IUnmanagedBrowsingDatabase, ThreatListDescriptor)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_UnmanagedBrowsingDatabaseExtension_GetThreatListsAsync_Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_">UnmanagedBrowsingDatabaseExtension.GetThreatListsAsync(IUnmanagedBrowsingDatabase)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_UnmanagedBrowsingDatabaseExtension_GetThreatListsAsync_Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_System_Collections_Generic_IEnumerable_Gee_External_Browsing_ThreatListDescriptor__">UnmanagedBrowsingDatabaseExtension.GetThreatListsAsync(IUnmanagedBrowsingDatabase, IEnumerable&lt;ThreatListDescriptor&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_UnmanagedBrowsingDatabaseExtension_GetThreatsAsync_Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_Gee_External_Browsing_ThreatListDescriptor_">UnmanagedBrowsingDatabaseExtension.GetThreatsAsync(IUnmanagedBrowsingDatabase, ThreatListDescriptor)</a>
+  </div>
+  <div>
+      <a class="xref" href="Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.html#Gee_External_Browsing_Databases_UnmanagedBrowsingDatabaseExtension_LookupAsync_Gee_External_Browsing_Databases_IUnmanagedBrowsingDatabase_Gee_External_Browsing_Url_">UnmanagedBrowsingDatabaseExtension.LookupAsync(IUnmanagedBrowsingDatabase, Url)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

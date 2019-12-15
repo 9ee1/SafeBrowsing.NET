@@ -1,0 +1,160 @@
+using Gee.External.Browsing;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using Gee.External.Browsing.Databases;
+using Gee.External.Browsing.Databases.Json;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// <summary>
+    ///     Main Program.
+    /// </summary>
+    public static class Program {
+        /// <summary>
+        ///     Get Threat List Descriptors.
+        /// </summary>
+        /// <param name="client">
+        ///     A <see cref="IBrowsingClient" />.
+        /// </param>
+        /// <returns>
+        ///     A collection of <see cref="ThreatListDescriptor" />.
+        /// </returns>
+        /// <exception cref="Gee.External.Browsing.Clients.BrowsingClientException">
+        ///     Thrown if an error communicating with the Google Safe Browsing API occurs.
+        /// </exception>
+        /// <exception cref="System.TimeoutException">
+        ///     Thrown if communication with the Google Safe Browsing API times out.
+        /// </exception>
+        private static Task<IEnumerable<ThreatListDescriptor>> GetThreatListDescriptorsAsync(IBrowsingClient client) {
+            var getThreatListDescriptorsTask = client.GetThreatListDescriptorsAsync(CancellationToken.None);
+            return getThreatListDescriptorsTask;
+        }
+
+        /// <summary>
+        ///     Get Threat List Updates.
+        /// </summary>
+        /// <param name="client">
+        ///     A <see cref="IBrowsingClient" />.
+        /// </param>
+        /// <param name="threatListDescriptors">
+        ///     A collection of <see cref="ThreatListDescriptor" /> identifying the <see cref="ThreatList" /> to
+        ///     retrieve.
+        /// </param>
+        /// <returns>
+        ///     A <see cref="ThreatListUpdateResponse" />.
+        /// </returns>
+        /// <exception cref="Gee.External.Browsing.Clients.BrowsingClientException">
+        ///     Thrown if an error communicating with the Google Safe Browsing API occurs.
+        /// </exception>
+        /// <exception cref="System.TimeoutException">
+        ///     Thrown if communication with the Google Safe Browsing API times out.
+        /// </exception>
+        private static Task<ThreatListUpdateResponse> GetThreatListUpdatesAsync(IBrowsingClient client, IEnumerable<ThreatListDescriptor> threatListDescriptors) {
+            var requestBuilder = ThreatListUpdateRequest.Build();
+            foreach (var threatListDescriptor in threatListDescriptors) {
+                // ...
+                //
+                // Add the threat list descriptor to the request so you can retrieve it as a full update.
+                requestBuilder.AddQuery(b => {
+                    b.SetThreatListDescriptor(threatListDescriptor);
+                    return b.Build();
+                });
+            }
+
+            var request = requestBuilder.Build();
+            var getThreatListUpdatesTask = client.GetThreatListUpdatesAsync(request, CancellationToken.None);
+            return getThreatListUpdatesTask;
+        }
+
+        /// <summary>
+        ///     Execute Main Program.
+        /// </summary>
+        /// <param name="args">
+        ///     A collection of arguments passed from the command line.
+        /// </param>
+        /// <returns>
+        ///     A task representing the asynchronous operation
+        /// </returns>
+        public static async Task Main(string[] args) {
+            // ...
+            //
+            // Create an HTTP client to communicate with the Google Safe Browsing API. Create a JSON database to store
+            // retrieved threat lists in-memory and persist them to disk as JSON. When the process starts, if the file
+            // exists on disk, it will load the file in memory. When the process terminates, the data is not lost
+            // because it is persisted to disk. Depending on how many threat lists you retrieve, this can consume a
+            // very large amount of memory.
+            using (var httpClient = new HttpBrowsingClient("YOUR_GOOGLE_API_KEY"))
+            using (var jsonDatabase = new ManagedJsonBrowsingDatabase("/Google.json")) {
+                try {
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListDescriptorsTask = Program.GetThreatListDescriptorsAsync(httpClient);
+                    var threatListDescriptors = await getThreatListDescriptorsTask.ConfigureAwait(false);
+
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListUpdatesTask = Program.GetThreatListUpdatesAsync(httpClient, threatListDescriptors);
+                    var threatListUpdateResponse = await getThreatListUpdatesTask.ConfigureAwait(false);
+                    foreach (var threatListUpdateResponseResult in threatListUpdateResponse.Results) {
+                        var threatList = threatListUpdateResponseResult.RetrievedThreatList;
+                        if (threatListUpdateResponseResult.IsFullUpdate) {
+                            // ...
+                            //
+                            // Store a local copy of the threat list. If the threat list already exists in the
+                            // database, it will be replaced in its entirety.
+                            //
+                            // Throws an exception if the operation fails.
+                            var threatsToAdd = threatListUpdateResponseResult.ThreatsToAdd;
+                            var storeThreatListTask = jsonDatabase.StoreThreatListAsync(threatList, threatsToAdd);
+                            await storeThreatListTask.ConfigureAwait(false);
+                        }
+                        else if (threatListUpdateResponseResult.IsPartialUpdate) {
+                            // ...
+                            //
+                            // Modify an existing local copy of the threat list. This includes removing existing threats
+                            // and adding new threats.
+                            var threatsToAdd = threatListUpdateResponseResult.ThreatsToAdd;
+                            var threatsToRemove = threatListUpdateResponseResult.ThreatsToRemove;
+                            var modifyThreatListTask = jsonDatabase.ModifyThreatListAsync(threatList, threatsToAdd, threatsToRemove);
+                            await modifyThreatListTask.ConfigureAwait(false);
+                        }
+
+                        // ...
+                        //
+                        // Compute the local threat list's checksum, after we either stored it for the first time or
+                        // modified it.
+                        //
+                        // Throws an exception if the operation fails.
+                        var localThreatListChecksumTask = jsonDatabase.ComputeThreatListChecksumAsync(threatList.Descriptor);
+                        var localThreatListChecksum = await localThreatListChecksumTask.ConfigureAwait(false);
+                        if (localThreatListChecksum != threatListUpdateResponseResult.RetrievedThreatListChecksum) {
+                            // ...
+                            //
+                            // Boo, the local threat list's checksum does not match the remote threat list's checksum.
+                            // This indicates the local threat list is corrupt and cannot be trusted until it is
+                            // retrieved again.
+                            //
+                            // With the out-of-the-box databases provided by Safe Browsing.NET, this corruption will
+                            // very rarely occur, if ever, but its always best practice to check for it.
+                        }
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+                catch (BrowsingDatabaseException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a database error.
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,441 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Managed Service Code Samples </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Managed Service Code Samples ">
+    <meta name="generator" content="docfx 2.48.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="managed-service-code-samples">Managed Service Code Samples</h1>
+
+<p>A <code>Managed Service</code> is a mechanism to 1) retrieve threat lists from the Google Safe Browsing API on a periodic schedule
+and manage a <code>Threat Database</code> for you automatically and 2) allow you to lookup a URL to determine whether it is safe
+or unsafe. It is, effectively, a <em>complete</em> implementation of the
+<a href="https://developers.google.com/safe-browsing/v4/update-api">Google Safe Browsing Update API protocol</a>.</p>
+<p>A <code>Managed Service</code> is the easiest and quickest mechanism to get started using Safe Browsing.NET. However, it might not
+be applicable for all use cases. If you have a use case where you want to manage a <code>Threat Database</code> and lookup URLs
+from the same process, a <code>Managed Service</code> is for you.</p>
+<p>If, however, you have a use case where you want to build a <code>Threat Database</code> that is shared by multiple different
+processes, regardless of whether those processes are local or remote, a <code>Managed Service</code> might not be the right
+solution for you.</p>
+<p>A <code>Managed Service</code> is named so because it <em>manages</em> a <code>Threat Database</code> for you.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>To follow along with these examples, please see the
+<a class="xref" href="../../api/Gee.External.Browsing.Services.html">Gee.External.Browsing.Services</a> namespace and in particular
+<a class="xref" href="../../api/Gee.External.Browsing.Services.ManagedBrowsingServiceBuilder.html">ManagedBrowsingServiceBuilder</a>,
+<a class="xref" href="../../api/Gee.External.Browsing.Services.ManagedBrowsingService.html">ManagedBrowsingService</a>, and
+<a class="xref" href="../../api/Gee.External.Browsing.Services.UrlLookupResult.html">UrlLookupResult</a> in the
+<a class="xref" href="../../api/Gee.External.Browsing.html">Safe Browsing.NET API reference</a>.</p>
+</div>
+<h2 id="example-create-a-managed-service-with-all-available-threat-lists">Example: Create a Managed Service With All Available Threat Lists</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing.Cache;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Databases;
+using Gee.External.Browsing.Services;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static async Task Main(string[] args) {
+            // ...
+            //
+            // Create a managed service that uses an in-memory cache, a JSON database that is persisted to disk, and
+            // an HTTP client to communicate with the Google Safe Browsing API.
+            //
+            // The managed service will automatically setup a database and manage it (i.e. it will automatically
+            // synchronize it with the Google Safe Browsing API in accordance with the Google Safe Browsing Update API
+            // protocol).
+            var managedService = ManagedBrowsingService.Build()
+                .UseMemoryCache()
+                .UseJsonDatabase(&quot;/Google.json&quot;)
+                .UseHttpClient(&quot;YOUR_GOOGLE_API_KEY&quot;)
+                .Build();
+
+            using (managedService) {
+                try {
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    const string testUrl = &quot;https://testsafebrowsing.appspot.com/s/phishing.html&quot;;
+                    var lookupTask = managedService.LookupAsync(testUrl);
+                    var testUrlLookupResult = await lookupTask.ConfigureAwait(false);
+                    if (testUrlLookupResult.IsDatabaseStale) {
+                        // ...
+                        //
+                        // If the database is stale, you can either wait for a few minutes and try again or assume the
+                        // URL is safe.
+                        //
+                        // Internally, if the database is stale, the service will block, up to a limit so your program
+                        // doesn't freeze, until it is up-to-date before determining whether the URL is safe or unsafe.
+                        // So this URL lookup result code should be rare.
+                    }
+                    else if (testUrlLookupResult.IsSafe) {
+                        // ...
+                        //
+                        // Yay, the URL is safe!
+                    }
+                    else if (testUrlLookupResult.IsUnsafe) {
+                        // ...
+                        //
+                        // If the URL is unsafe, retrieve the computed URL expression that indicated it is unsafe.
+                        var unsafeUrlExpression = testUrlLookupResult.UnsafeUrlExpression;
+
+                        // ...
+                        //
+                        // If the URL is unsafe, retrieve the collection of unsafe threat list descriptors the URL is
+                        // associated with.
+                        var unsafeThreatListDescriptors = testUrlLookupResult.UnsafeThreatListDescriptors;
+
+                        // ...
+                        //
+                        // If the URL is unsafe, you can use the collection of unsafe threat list descriptors the URL
+                        // is associated with to determine the target platforms and threat types. But you can also use
+                        // the following convenient properties to retrieve them.
+                        var targetPlatforms = testUrlLookupResult.TargetPlatforms;
+                        var threatTypes = testUrlLookupResult.ThreatTypes;
+                    }
+                }
+                catch (BrowsingCacheException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a caching error.
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+                catch (BrowsingDatabaseException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a database error.
+                }
+            }
+        }
+    }
+}
+</code></pre><h2 id="example-create-a-managed-service-with-a-restricted-number-of-threat-lists">Example: Create a Managed Service With a Restricted Number of Threat Lists</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing;
+using Gee.External.Browsing.Cache;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Databases;
+using Gee.External.Browsing.Services;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static async Task Main(string[] args) {
+            // ...
+            //
+            // Create a managed service that uses an in-memory cache, a JSON database that is persisted to disk, and
+            // an HTTP client to communicate with the Google Safe Browsing API.
+            //
+            // We're also restricting the managed service here to only retrieve threat list updates for URLs serving
+            // malware on Linux and Windows. All other threat lists will be ignored.
+            //
+            // The managed service will automatically setup a threat database and manage it(i.e.it will automatically
+            // synchronize it with the Google Safe Browsing API in accordance with the Google Safe Browsing Update API
+            // protocol).
+            var managedService = ManagedBrowsingService.Build()
+                .UseMemoryCache()
+                .UseJsonDatabase(&quot;/Google.json&quot;)
+                .UseHttpClient(&quot;YOUR_GOOGLE_API_KEY&quot;)
+                .RestrictUpdatesTo(ThreatType.Malware, PlatformType.Linux, ThreatEntryType.Url)
+                .RestrictUpdatesTo(ThreatType.Malware, PlatformType.Windows, ThreatEntryType.Url)
+                .Build();
+
+            using (managedService) {
+                try {
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    const string testUrl = &quot;https://testsafebrowsing.appspot.com/s/phishing.html&quot;;
+                    var lookupTask = managedService.LookupAsync(testUrl);
+                    var testUrlLookupResult = await lookupTask.ConfigureAwait(false);
+                    if (testUrlLookupResult.IsDatabaseStale) {
+                        // ...
+                        //
+                        // If the database is stale, you can either wait for a few minutes and try again or assume the
+                        // URL is safe.
+                        //
+                        // Internally, if the database is stale, the service will block, up to a limit so your program
+                        // doesn't freeze, until it is up-to-date before determining whether the URL is safe or unsafe.
+                        // So this URL lookup result code should be rare.
+                    }
+                    else if (testUrlLookupResult.IsSafe) {
+                        // ...
+                        //
+                        // Yay, the URL is safe!
+                    }
+                    else if (testUrlLookupResult.IsUnsafe) {
+                        // ...
+                        //
+                        // If the URL is unsafe, retrieve the computed URL expression that indicated it is unsafe.
+                        var unsafeUrlExpression = testUrlLookupResult.UnsafeUrlExpression;
+
+                        // ...
+                        //
+                        // If the URL is unsafe, retrieve the collection of unsafe threat list descriptors the URL is
+                        // associated with.
+                        var unsafeThreatListDescriptors = testUrlLookupResult.UnsafeThreatListDescriptors;
+
+                        // ...
+                        //
+                        // If the URL is unsafe, you can use the collection of unsafe threat list descriptors the URL
+                        // is associated with to determine the target platforms and threat types. But you can also use
+                        // the following convenient properties to retrieve them.
+                        var targetPlatforms = testUrlLookupResult.TargetPlatforms;
+                        var threatTypes = testUrlLookupResult.ThreatTypes;
+                    }
+                }
+                catch (BrowsingCacheException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a caching error.
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+                catch (BrowsingDatabaseException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a database error.
+                }
+            }
+        }
+    }
+}
+</code></pre><h2 id="example-create-a-managed-service-with-threat-list-update-constraints">Example: Create a Managed Service With Threat List Update Constraints</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing;
+using Gee.External.Browsing.Cache;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Databases;
+using Gee.External.Browsing.Services;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static async Task Main(string[] args) {
+            // ...
+            //
+            // Create a managed service that uses an in-memory cache, an in-memory database, and an HTTP client to
+            // communicate with the Google Safe Browsing API.
+            //
+            // We're also restricting the managed service here to only retrieve 4096 threats for social engineering
+            // URLs on any platform. All other threat lists will be ignored.
+            //
+            // The managed service will automatically setup a threat database and manage it (i.e. it will automatically
+            // synchronize it with the Google Safe Browsing API in accordance with the Google Safe Browsing Update API
+            // protocol).
+            var managedService = ManagedBrowsingService.Build()
+                .UseMemoryCache()
+                .UseMemoryDatabase()
+                .UseHttpClient(&quot;YOUR_GOOGLE_API_KEY&quot;)
+                .RestrictUpdatesTo(ThreatType.SocialEngineering, PlatformType.Any, ThreatEntryType.Url, b =&gt; {
+                    b.SetMaximumDatabaseEntries(4096);
+                    return b.Build();
+                })
+                .Build();
+
+            using (managedService) {
+                try {
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    const string testUrl = &quot;https://testsafebrowsing.appspot.com/s/phishing.html&quot;;
+                    var lookupTask = managedService.LookupAsync(testUrl);
+                    var testUrlLookupResult = await lookupTask.ConfigureAwait(false);
+                    if (testUrlLookupResult.IsDatabaseStale) {
+                        // ...
+                        //
+                        // If the database is stale, you can either wait for a few minutes and try again or assume the
+                        // URL is safe.
+                        //
+                        // Internally, if the database is stale, the service will block, up to a limit so your program
+                        // doesn't freeze, until it is up-to-date before determining whether the URL is safe or unsafe.
+                        // So this URL lookup result code should be rare.
+                    }
+                    else if (testUrlLookupResult.IsSafe) {
+                        // ...
+                        //
+                        // Yay, the URL is safe!
+                    }
+                    else if (testUrlLookupResult.IsUnsafe) {
+                        // ...
+                        //
+                        // If the URL is unsafe, retrieve the computed URL expression that indicated it is unsafe.
+                        var unsafeUrlExpression = testUrlLookupResult.UnsafeUrlExpression;
+
+                        // ...
+                        //
+                        // If the URL is unsafe, retrieve the collection of unsafe threat list descriptors the URL is
+                        // associated with.
+                        var unsafeThreatListDescriptors = testUrlLookupResult.UnsafeThreatListDescriptors;
+
+                        // ...
+                        //
+                        // If the URL is unsafe, you can use the collection of unsafe threat list descriptors the URL
+                        // is associated with to determine the target platforms and threat types. But you can also use
+                        // the following convenient properties to retrieve them.
+                        var targetPlatforms = testUrlLookupResult.TargetPlatforms;
+                        var threatTypes = testUrlLookupResult.ThreatTypes;
+                    }
+                }
+                catch (BrowsingCacheException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a caching error.
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+                catch (BrowsingDatabaseException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a database error.
+                }
+            }
+        }
+    }
+}
+</code></pre></article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

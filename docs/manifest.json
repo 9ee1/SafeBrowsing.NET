@@ -1,0 +1,1098 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/ahmed/Documents/Gee.External.Browsing/.docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.BrowsingException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.BrowsingException.html",
+          "hash": "ASe5w8HFGTNfLmvofvbUpQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.BrowsingCacheException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.BrowsingCacheException.html",
+          "hash": "/7DAo1WaS851GkzN0yfX5Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.BrowsingCacheExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.BrowsingCacheExtension.html",
+          "hash": "dNSw+uM2Q/Z9iP0vL6HWZA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.CacheLookupResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.CacheLookupResult.html",
+          "hash": "XsVOAWMpipWWilllGB4vng=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.CacheLookupResultCode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.CacheLookupResultCode.html",
+          "hash": "OctHZz+dCyGw5047G4DWeA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.IBrowsingCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.IBrowsingCache.html",
+          "hash": "dBBhh+8hJ21vXJSKOxWHhA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.MemoryBrowsingCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.MemoryBrowsingCache.html",
+          "hash": "c0N6BZZPS+vVQrFCTNrxrw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.ResilientBrowsingCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.ResilientBrowsingCache.html",
+          "hash": "YksIesNdkk4Tc+Cqq9B6Pg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.SafeCacheEntry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.SafeCacheEntry.html",
+          "hash": "w70ZAhyX5AHjKMUbyjDAhw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.UnsafeCacheEntry.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.UnsafeCacheEntry.html",
+          "hash": "fEHQY/MdVUag3arus67pNA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Cache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Cache.html",
+          "hash": "mGHkDtGzk8AL+uLdvlNiUg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.BrowsingClientException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.BrowsingClientException.html",
+          "hash": "4IK4FfMuuhG7Gv1tIHZ8Ow=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.BrowsingClientExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.BrowsingClientExtension.html",
+          "hash": "UOKnzVVHkJgx4sLNsJKu2Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ClientMetadata.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ClientMetadata.html",
+          "hash": "i5LugB7NrFdqHNj11PBOhw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.FullHashQuery.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.FullHashQuery.html",
+          "hash": "vD2AG49hLBmrNhf9ZT4liA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.FullHashRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.FullHashRequest.html",
+          "hash": "0uK3BtD19paGuD1Sd6i4Ew=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.FullHashRequestBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.FullHashRequestBuilder.html",
+          "hash": "unodODTfBSFiBDXQje8Iwg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.FullHashResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.FullHashResponse.html",
+          "hash": "lsmszjRddgQSZ42+oUrFwA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.FullHashResponseBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.FullHashResponseBuilder.html",
+          "hash": "B1KsO172sGNTLwzqYCEh2A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.Http.HttpBrowsingClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.Http.HttpBrowsingClient.html",
+          "hash": "mTl1S7+gf13fBL4eJuuFAQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.Http.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.Http.html",
+          "hash": "4qOPStwtzk9CA9FT66zU5g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.IBrowsingClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.IBrowsingClient.html",
+          "hash": "EaPTSHW5C++I2JRlBclcIw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ResilientBrowsingClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ResilientBrowsingClient.html",
+          "hash": "xqF9eDinUKn5CySq4FcO4A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateConstraints.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateConstraints.html",
+          "hash": "WrqIimHXMfReZhihleCKZA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateConstraintsBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateConstraintsBuilder.html",
+          "hash": "55ugC+YHvnS9vT/jesQkdQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateQuery.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateQuery.html",
+          "hash": "06mVKBzlSNwZ2NcqsO3fGw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateQueryBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateQueryBuilder.html",
+          "hash": "PRMjACo0W6Y0lwQGdHhJJQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateRequest.html",
+          "hash": "x6vSpCst+PcACeuhwNpHLA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateRequestBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateRequestBuilder.html",
+          "hash": "PitS8hx7zUIzgupo+4tD1g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateResponse.html",
+          "hash": "Ikm8MM51VLHyD70wsLbZgQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateResponseBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateResponseBuilder.html",
+          "hash": "K9mL7TCWYPElkKZpgspCkg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateResult.html",
+          "hash": "7+Nq3m2I1r67bLxMcEyrlQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateResultBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateResultBuilder.html",
+          "hash": "73r67sBf2FbXoL9tcjwmLA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatListUpdateType.html",
+          "hash": "CzOO3vU09aiv+2MIuL0myg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.ThreatState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.ThreatState.html",
+          "hash": "AuIQdjXvejJ9L3MsKh80sA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Clients.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Clients.html",
+          "hash": "pAycP3mELTp1VD0gNxvQYw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.BaseResilientBrowsingDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.BaseResilientBrowsingDatabase.html",
+          "hash": "Cskt8Rohs28M+aVV39lttw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.BrowsingDatabaseException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.BrowsingDatabaseException.html",
+          "hash": "FPvTHFAQgpMyRluEBWOEnA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.DatabaseLookupResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.DatabaseLookupResult.html",
+          "hash": "1SSkMgU3ZBXjlZQTBy2o4Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.DatabaseLookupResultCode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.DatabaseLookupResultCode.html",
+          "hash": "blCRs2RyZfLvNODPV6ZwLA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.IManagedBrowsingDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.IManagedBrowsingDatabase.html",
+          "hash": "3/Mzy7yUbbW2fwbt4kxzpw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.IUnmanagedBrowsingDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.IUnmanagedBrowsingDatabase.html",
+          "hash": "1l4bo4Mq8iFTJ1nTcS8knQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.Json.BaseJsonBrowsingDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.Json.BaseJsonBrowsingDatabase.html",
+          "hash": "PGHiRK/cqqdI3/VBWlPitg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.Json.ManagedJsonBrowsingDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.Json.ManagedJsonBrowsingDatabase.html",
+          "hash": "mmPyoNGIOxAqVhR4NmT2LA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.Json.UnmanagedJsonBrowsingDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.Json.UnmanagedJsonBrowsingDatabase.html",
+          "hash": "atN1ZT1wLQMDelgoUOWaeA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.Json.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.Json.html",
+          "hash": "uiRnPxBjM2RzZS5RqlI0zA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.ManagedBrowsingDatabaseExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.ManagedBrowsingDatabaseExtension.html",
+          "hash": "W18MpZQx3tIt4+sUhosxbA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.MemoryBrowsingDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.MemoryBrowsingDatabase.html",
+          "hash": "kpV/YNahVpOoIPFtjvJgCA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.ResilientManagedBrowsingDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.ResilientManagedBrowsingDatabase.html",
+          "hash": "4IOLd+rR0W/sc+bdJvPYnQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.ResilientUnmanagedBrowsingDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.ResilientUnmanagedBrowsingDatabase.html",
+          "hash": "Tp3XSCgjrDHFcupZA2XWWQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.UnmanagedBrowsingDatabaseExtension.html",
+          "hash": "o5mF2pa54Vq9enr9G9Ut6Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Databases.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Databases.html",
+          "hash": "V3udS3JYAuXgS+Ce1juJeg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.PlatformType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.PlatformType.html",
+          "hash": "Yfw8uSsZCN7b+kSeJmoZOw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.BaseBrowsingService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.BaseBrowsingService.html",
+          "hash": "H/YCmi0JzYrmksUuch97Tg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.BaseBrowsingServiceBuilder-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.BaseBrowsingServiceBuilder-1.html",
+          "hash": "dYp+nUu/zF19005DPLNjMw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.BrowsingDatabaseManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.BrowsingDatabaseManager.html",
+          "hash": "7EBl7z5Rh7E8iOKzX1yPGg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.BrowsingDatabaseManagerBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.BrowsingDatabaseManagerBuilder.html",
+          "hash": "NtpDuNSjGmA3F6s1/nq9PA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.BrowsingServiceExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.BrowsingServiceExtension.html",
+          "hash": "fxYITYFvuOsOBAd05KToxA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.IBrowsingService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.IBrowsingService.html",
+          "hash": "Yg1zO5oE9J51ZHcwn2+awQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.ManagedBrowsingService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.ManagedBrowsingService.html",
+          "hash": "8D1gMeXFtrcjp0Ii6WsGYg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.ManagedBrowsingServiceBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.ManagedBrowsingServiceBuilder.html",
+          "hash": "wLhvbcF3GSt9pPt+S3kABg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.ThreatListSynchronizationCompletedEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.ThreatListSynchronizationCompletedEventArgs.html",
+          "hash": "CKaDUBm63SIIztc646zCZg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.ThreatListSynchronizationFailedEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.ThreatListSynchronizationFailedEventArgs.html",
+          "hash": "El9OkRZlJ7EUxPe+3tsjwg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.UnmanagedBrowsingService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.UnmanagedBrowsingService.html",
+          "hash": "abpT68x4IcWEcSq7DIj5gw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.UnmanagedBrowsingServiceBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.UnmanagedBrowsingServiceBuilder.html",
+          "hash": "3g9b5QB3Tq0MO8zI7dwKMg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.UrlLookupResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.UrlLookupResult.html",
+          "hash": "9so4n5RowKbEPrOQ3WtWXw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.UrlLookupResultCode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.UrlLookupResultCode.html",
+          "hash": "UXsxPfDtqoaFCg/1GBsfBA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Services.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Services.html",
+          "hash": "1rcYptKvX0DVpSl70tP6Fg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.ThreatEntryType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.ThreatEntryType.html",
+          "hash": "OPPGeZxNMMFYqvE9JFRgsg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.ThreatList.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.ThreatList.html",
+          "hash": "ahK3JF4sxoaAWs+Zi9vf0w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.ThreatListBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.ThreatListBuilder.html",
+          "hash": "rb/u3KU10HtI/2jltU8yeA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.ThreatListDescriptor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.ThreatListDescriptor.html",
+          "hash": "uLcWyvLdWTBderEPE4qH6A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.ThreatType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.ThreatType.html",
+          "hash": "9sNT7ytzDQzf/n5EVyLsWQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.UnsafeThreat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.UnsafeThreat.html",
+          "hash": "MbeWCe+M1EnoIAy8QI/odA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.Url.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.Url.html",
+          "hash": "xF7vTIY5e8FQa9dT/Q5Abg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.UrlExpression.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.UrlExpression.html",
+          "hash": "U3d5amnE949NXf1e8AZv6g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Gee.External.Browsing.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Gee.External.Browsing.html",
+          "hash": "GRlXE8ZmEGZOSbl3nTwAWg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "9k/Cov84tOJf297SrAXJDQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/code-samples/database-manager.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/code-samples/database-manager.html",
+          "hash": "cAh9lSdvU1sEytgydYBx9g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/code-samples/databases.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/code-samples/databases.html",
+          "hash": "Cz6PUCrnui5h66NoJgTeSA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/code-samples/http-client.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/code-samples/http-client.html",
+          "hash": "ehYEyQEVJhZNwEcBh5KXwg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/code-samples/managed-service.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/code-samples/managed-service.html",
+          "hash": "MwlZWMTmqRL7BMlSmsa+uQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/code-samples/unmanaged-service.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/code-samples/unmanaged-service.html",
+          "hash": "dLhijyC5gG6HelhFU7CumQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/index.html",
+          "hash": "1hyZkUSzQCLkKPARpgfy/A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "h4aK7nU8wU+toN2c0pDCQg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "rAjJOA5aoy+qbP0FcPxjcw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "wB+BYV/K1o19O02L6dtyOw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 7,
+          "skipped_file_count": 7
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 77,
+          "skipped_file_count": 77
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

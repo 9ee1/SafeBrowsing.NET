@@ -1,0 +1,432 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Threat Database Synchronizer Code Samples </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Threat Database Synchronizer Code Samples ">
+    <meta name="generator" content="docfx 2.48.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="threat-database-synchronizer-code-samples">Threat Database Synchronizer Code Samples</h1>
+
+<p>A <code>Threat Database Synchronizer</code> is a mechanism to retrieve threat lists from the Google Safe Browsing API on a
+periodic schedule and manage a <code>Threat Database</code> for you automatically.</p>
+<p>If you have a use case where you want to build a <code>Threat Database</code> that is shared by multiple different processes,
+regardless of whether those processes are local or remote, a <code>Threat Database Synchronizer</code> is the right solution for
+you. It can simplify the implementation effort for you since you don't have to build your own database synchronization
+mechanism.</p>
+<div class="TIP">
+<h5>Tip</h5>
+<p>To follow along with these examples, please see the
+<a class="xref" href="../../api/Gee.External.Browsing.Services.html">Gee.External.Browsing.Services</a> namespace and in particular
+<a href="xref:Gee.External.Browsing.Services.BrowsingDatabaseSynchronizerBuilder">BrowsingDatabaseSynchronizerBuilder</a> and
+<a href="xref:Gee.External.Browsing.Services.BrowsingDatabaseSynchronizer">BrowsingDatabaseSynchronizer</a> in the
+<a class="xref" href="../../api/Gee.External.Browsing.html">Safe Browsing.NET API reference</a>.</p>
+</div>
+<h2 id="example-create-a-database-synchronizer-with-all-available-threat-lists">Example: Create a Database Synchronizer With All Available Threat Lists</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing.Services;
+using System;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static void Main(string[] args) {
+            // ...
+            //
+            // Create a database synchronizer that uses a JSON database that is persisted to disk and an HTTP client to
+            // communicate with the Google Safe Browsing API.
+            //
+            // The database synchronizer will automatically setup a threat database and manage it (i.e. it will
+            // automatically synchronize it with the Google Safe Browsing API in accordance with the Google Safe
+            // Browsing Update API protocol).
+            //
+            // You can, for example, use another mechanism, such as an unmanaged service, to query the threat database.
+            var databaseSynchronizerBuilder = BrowsingDatabaseSynchronizer.Build()
+                .UseHttpClient(&quot;YOUR_GOOGLE_API_KEY&quot;)
+                .UseJsonDatabase(&quot;/Google.json&quot;)
+                .Build();
+
+            using (databaseSynchronizerBuilder) {
+                // ...
+                //
+                // Register event handlers to be notified when a threat list is retrieved and either synchronized
+                // successfully or failed to synchronize.
+                databaseSynchronizerBuilder.ThreatListSynchronizationCompleted += Program.OnThreatListSyncCompleted;
+                databaseSynchronizerBuilder.ThreatListSynchronizationFailed += Program.OnThreatListSyncFailed;
+
+                Console.ReadLine();
+            }
+        }
+
+        /// &lt;summary&gt;
+        ///     Handle a Threat List Synchronization Completed Event.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;eventArgs&quot;&gt;
+        ///     A &lt;see cref=&quot;ThreatListSynchronizationCompletedEventArgs&quot; /&gt; indicating the nature of the event.
+        /// &lt;/param&gt;
+        private static void OnThreatListSyncCompleted(ThreatListSynchronizationCompletedEventArgs eventArgs) {
+            // ...
+            //
+            // Represents the threat list that was retrieved from the Google Safe Browsing API and synchronized in the
+            // database.
+            var threatList = eventArgs.SynchronizedThreatList;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list started.
+            var syncStartDate = eventArgs.SynchronizationStartDate;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list completed.
+            var syncCompleteDate = eventArgs.SynchronizationCompletionDate;
+        }
+
+        /// &lt;summary&gt;
+        ///     Handle a Threat List Synchronization Failed Event.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;eventArgs&quot;&gt;
+        ///     A &lt;see cref=&quot;ThreatListSynchronizationFailedEventArgs&quot; /&gt; indicating the nature of the event.
+        /// &lt;/param&gt;
+        private static void OnThreatListSyncFailed(ThreatListSynchronizationFailedEventArgs eventArgs) {
+            // ...
+            //
+            // Represents the threat list that failed to synchronize in the database.
+            var threatList = eventArgs.SkippedThreatList;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list started.
+            var syncStartDate = eventArgs.SynchronizationStartDate;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list failed.
+            var syncFailDate = eventArgs.SynchronizationFailureDate;
+
+            // ...
+            //
+            // Represents the exception that was thrown when the synchronize operation for the threat list failed.
+            var syncException = eventArgs.SynchronizationException;
+        }
+    }
+}
+</code></pre><h2 id="example-create-a-database-synchronizer-with-a-restricted-number-of-threat-lists">Example: Create a Database Synchronizer With a Restricted Number of Threat Lists</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing;
+using Gee.External.Browsing.Services;
+using System;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static void Main(string[] args) {
+            // ...
+            //
+            // Create a database synchronizer that uses a JSON database that is persisted to disk and an HTTP client to
+            // communicate with the Google Safe Browsing API.
+            //
+            // We're also restricting the database synchronizer here to only retrieve threat list updates for URLs
+            // serving malware on Linux and Windows. All other threat lists will be ignored.
+            //
+            // The database synchronizer will automatically setup a threat database and manage it (i.e. it will
+            // automatically synchronize it with the Google Safe Browsing API in accordance with the Google Safe
+            // Browsing Update API protocol).
+            //
+            // You can, for example, use another mechanism, such as an unmanaged service, to query the threat database.
+            var databaseSynchronizerBuilder = BrowsingDatabaseSynchronizer.Build()
+                .UseHttpClient(&quot;YOUR_GOOGLE_API_KEY&quot;)
+                .UseJsonDatabase(&quot;/Google.json&quot;)
+                .RestrictUpdatesTo(ThreatType.Malware, PlatformType.Linux, ThreatEntryType.Url)
+                .RestrictUpdatesTo(ThreatType.Malware, PlatformType.Windows, ThreatEntryType.Url)
+                .Build();
+
+            using (databaseSynchronizerBuilder) {
+                // ...
+                //
+                // Register event handlers to be notified when a threat list is retrieved and either synchronized
+                // successfully or failed to synchronize.
+                databaseSynchronizerBuilder.ThreatListSynchronizationCompleted += Program.OnThreatListSyncCompleted;
+                databaseSynchronizerBuilder.ThreatListSynchronizationFailed += Program.OnThreatListSyncFailed;
+
+                Console.ReadLine();
+            }
+        }
+
+        /// &lt;summary&gt;
+        ///     Handle a Threat List Synchronization Completed Event.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;eventArgs&quot;&gt;
+        ///     A &lt;see cref=&quot;ThreatListSynchronizationCompletedEventArgs&quot; /&gt; indicating the nature of the event.
+        /// &lt;/param&gt;
+        private static void OnThreatListSyncCompleted(ThreatListSynchronizationCompletedEventArgs eventArgs) {
+            // ...
+            //
+            // Represents the threat list that was retrieved from the Google Safe Browsing API and synchronized in the
+            // database.
+            var threatList = eventArgs.SynchronizedThreatList;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list started.
+            var syncStartDate = eventArgs.SynchronizationStartDate;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list completed.
+            var syncCompleteDate = eventArgs.SynchronizationCompletionDate;
+        }
+
+        /// &lt;summary&gt;
+        ///     Handle a Threat List Synchronization Failed Event.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;eventArgs&quot;&gt;
+        ///     A &lt;see cref=&quot;ThreatListSynchronizationFailedEventArgs&quot; /&gt; indicating the nature of the event.
+        /// &lt;/param&gt;
+        private static void OnThreatListSyncFailed(ThreatListSynchronizationFailedEventArgs eventArgs) {
+            // ...
+            //
+            // Represents the threat list that failed to synchronize in the database.
+            var threatList = eventArgs.SkippedThreatList;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list started.
+            var syncStartDate = eventArgs.SynchronizationStartDate;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list failed.
+            var syncFailDate = eventArgs.SynchronizationFailureDate;
+
+            // ...
+            //
+            // Represents the exception that was thrown when the synchronize operation for the threat list failed.
+            var syncException = eventArgs.SynchronizationException;
+        }
+    }
+}
+</code></pre><h2 id="example-create-a-database-synchronizer-with-threat-list-update-constraints">Example: Create a Database Synchronizer With Threat List Update Constraints</h2>
+<pre><code class="lang-csharp" name="Main">using Gee.External.Browsing;
+using Gee.External.Browsing.Services;
+using System;
+
+namespace Examples {
+    /// &lt;summary&gt;
+    ///     Main Program.
+    /// &lt;/summary&gt;
+    public static class Program {
+        /// &lt;summary&gt;
+        ///     Execute Main Program.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;args&quot;&gt;
+        ///     A collection of arguments passed from the command line.
+        /// &lt;/param&gt;
+        /// &lt;returns&gt;
+        ///     A task representing the asynchronous operation
+        /// &lt;/returns&gt;
+        public static void Main(string[] args) {
+            // ...
+            //
+            // Create a database synchronizer that uses a JSON database that is persisted to disk and an HTTP client to
+            // communicate with the Google Safe Browsing API.
+            //
+            // We're also restricting the database synchronizer here to only retrieve 4096 threat list updates for
+            // social engineering URLs on any platform. All other threat lists will be ignored.
+            //
+            // The database synchronizer will automatically setup a threat database and manage it (i.e. it will
+            // automatically synchronize it with the Google Safe Browsing API in accordance with the Google Safe
+            // Browsing Update API protocol).
+            //
+            // You can, for example, use another mechanism, such as an unmanaged service, to query the threat database.
+            var databaseSynchronizerBuilder = BrowsingDatabaseSynchronizer.Build()
+                .UseHttpClient(&quot;YOUR_GOOGLE_API_KEY&quot;)
+                .UseJsonDatabase(&quot;/Google.json&quot;)
+                .RestrictUpdatesTo(ThreatType.SocialEngineering, PlatformType.Any, ThreatEntryType.Url, b =&gt; {
+                    b.SetMaximumDatabaseEntries(4096);
+                    return b.Build();
+                })
+                .Build();
+
+            using (databaseSynchronizerBuilder) {
+                // ...
+                //
+                // Register event handlers to be notified when a threat list is retrieved and either synchronized
+                // successfully or failed to synchronize.
+                databaseSynchronizerBuilder.ThreatListSynchronizationCompleted += Program.OnThreatListSyncCompleted;
+                databaseSynchronizerBuilder.ThreatListSynchronizationFailed += Program.OnThreatListSyncFailed;
+
+                Console.ReadLine();
+            }
+        }
+
+        /// &lt;summary&gt;
+        ///     Handle a Threat List Synchronization Completed Event.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;eventArgs&quot;&gt;
+        ///     A &lt;see cref=&quot;ThreatListSynchronizationCompletedEventArgs&quot; /&gt; indicating the nature of the event.
+        /// &lt;/param&gt;
+        private static void OnThreatListSyncCompleted(ThreatListSynchronizationCompletedEventArgs eventArgs) {
+            // ...
+            //
+            // Represents the threat list that was retrieved from the Google Safe Browsing API and synchronized in the
+            // database.
+            var threatList = eventArgs.SynchronizedThreatList;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list started.
+            var syncStartDate = eventArgs.SynchronizationStartDate;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list completed.
+            var syncCompleteDate = eventArgs.SynchronizationCompletionDate;
+        }
+
+        /// &lt;summary&gt;
+        ///     Handle a Threat List Synchronization Failed Event.
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;eventArgs&quot;&gt;
+        ///     A &lt;see cref=&quot;ThreatListSynchronizationFailedEventArgs&quot; /&gt; indicating the nature of the event.
+        /// &lt;/param&gt;
+        private static void OnThreatListSyncFailed(ThreatListSynchronizationFailedEventArgs eventArgs) {
+            // ...
+            //
+            // Represents the threat list that failed to synchronize in the database.
+            var threatList = eventArgs.SkippedThreatList;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list started.
+            var syncStartDate = eventArgs.SynchronizationStartDate;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list failed.
+            var syncFailDate = eventArgs.SynchronizationFailureDate;
+
+            // ...
+            //
+            // Represents the exception that was thrown when the synchronize operation for the threat list failed.
+            var syncException = eventArgs.SynchronizationException;
+        }
+    }
+}
+</code></pre></article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

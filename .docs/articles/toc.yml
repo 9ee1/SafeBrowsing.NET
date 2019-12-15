@@ -1,0 +1,14 @@
+- name: "Introduction"
+  href: index.md
+- name: "Code Samples"
+  items:
+    - name: "Managed Service Code Samples"
+      href: code-samples/managed-service.md
+    - name: "Unmanaged Service Code Samples"
+      href: code-samples/unmanaged-service.md
+    - name: "HTTP Client Code Samples"
+      href: code-samples/http-client.md
+    - name: "Threat Databases Code Samples"
+      href: code-samples/databases.md
+    - name: "Threat Database Manager Code Samples"
+      href: code-samples/database-manager.md

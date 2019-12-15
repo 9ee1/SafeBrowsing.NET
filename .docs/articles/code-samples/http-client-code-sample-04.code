@@ -1,0 +1,118 @@
+using Gee.External.Browsing;
+using Gee.External.Browsing.Clients;
+using Gee.External.Browsing.Clients.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Examples {
+    /// <summary>
+    ///     Main Program.
+    /// </summary>
+    public static class Program {
+        /// <summary>
+        ///     Execute Main Program.
+        /// </summary>
+        /// <param name="args">
+        ///     A collection of arguments passed from the command line.
+        /// </param>
+        /// <returns>
+        ///     A task representing the asynchronous operation
+        /// </returns>
+        public static async Task Main(string[] args) {
+            var httpClient = new HttpBrowsingClient("YOUR_GOOGLE_API_KEY");
+            using (httpClient) {
+                try {
+                    // ...
+                    //
+                    // Build a request to retrieve two threat lists. One of the threat lists will be retrieved as a
+                    // partial update. One will be retrieved as a full update.
+                    //
+                    // By specifying a state, you are retrieving the threat list as a partial update. A partial update
+                    // refers to retrieving only updates to a threat list since the last time you retrieved it as a full
+                    // update. In other words, you want to retrieve a computed difference between your local copy of
+                    // the threat list and Google's remote copy of the threat list as of the time you send the request.
+                    var request = ThreatListUpdateRequest.Build()
+                        .AddQuery(b => {
+                            b.SetThreatListDescriptor(ThreatType.Malware, PlatformType.Linux, ThreatEntryType.Url);
+                            b.SetThreatListState("AABBCC");
+                            return b.Build();
+                        })
+                        .AddQuery(b => {
+                            b.SetThreatListDescriptor(ThreatType.Malware, PlatformType.Windows, ThreatEntryType.Url);
+                            return b.Build();
+                        })
+                        .Build();
+
+                    // ...
+                    //
+                    // Throws an exception if the operation fails.
+                    var getThreatListUpdatesTask = httpClient.GetThreatListUpdatesAsync(request, CancellationToken.None);
+                    var response = await getThreatListUpdatesTask.ConfigureAwait(false);
+                    foreach (var responseResult in response.Results) {
+                        // ...
+                        //
+                        // There will be one retrieved threat list for each one requested. Its checksum is a SHA256
+                        // hash formatted as a hexadecimal encoded string.
+                        //
+                        // The threat list's state will help you to subsequently retrieve the threat list as a partial
+                        // update. It is an opaque value formatted as a hexadecimal encoded string.
+                        var retrievedThreatList = responseResult.RetrievedThreatList;
+                        var retrievedThreatListChecksum = responseResult.RetrievedThreatListChecksum;
+                        var retrievedThreatListState = retrievedThreatList.State;
+
+                        // ...
+                        //
+                        // The threat list's wait to date, if not a null reference, indicates the date you MUST wait to
+                        // before retrieving the threat list from the Google Safe Browsing API again.
+                        var retrievedThreatListWaitToDate = responseResult.RetrievedThreatList.WaitToDate;
+
+                        if (responseResult.IsFullUpdate) {
+                            // ...
+                            //
+                            // If the threat list is retrieved as a full update, there will only be threats identified
+                            // for addition to your local copy of it.
+                            foreach (var threatToAdd in responseResult.ThreatsToAdd) {
+                                // ...
+                                //
+                                // Store each threat identified for addition to your local copy of the threat list.
+                                // Each threat is identified using a SHA256 hash formatted as a hexadecimal encoded
+                                // string.
+                            }
+                        }
+                        else if (responseResult.IsPartialUpdate) {
+                            // ...
+                            //
+                            // If the threat list is retrieved as a partial update, there will be threats identified
+                            // for addition to and removal from your local copy of it.
+                            //
+                            // You MUST FIRST remove the threats identified for removal BEFORE adding the threats
+                            // identified for addition.
+                            foreach (var threatToRemove in responseResult.ThreatsToRemove) {
+                                // ...
+                                //
+                                // Remove each threat identified for removal from your local copy of the threat list.
+                                // Each threat is identified using a zero-based index. You'll need to lexicographically
+                                // sort your local copy of the threat list before you're able to remove the threats
+                                // identified for removal.
+                            }
+
+                            foreach (var threatToAdd in responseResult.ThreatsToAdd) {
+                                // ...
+                                //
+                                // Store each threat identified for addition to your local copy of the threat list.
+                                // Each threat is identified using a SHA256 hash formatted as a hexadecimal encoded
+                                // string.
+                            }
+                        }
+                    }
+                }
+                catch (BrowsingClientException) {
+                    // ...
+                    //
+                    // Catch this exception if you want to handle a communication error with the Google Safe Browsing
+                    // API.
+                }
+            }
+        }
+    }
+}

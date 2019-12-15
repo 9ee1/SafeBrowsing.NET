@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Managed Service </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Managed Service ">
+    <meta name="generator" content="docfx 2.48.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="managed-service">Managed Service</h1>
+
+<p>In Safe Browsing.NET, a <em>Managed Service</em> is a type that 1) automatically manages a <em>Threat Database</em> and 2) allows you
+to lookup a URL to determine whether it is safe or unsafe. A <em>Managed Service</em> is, effectively, a complete
+implementation of the
+<a href="https://developers.google.com/safe-browsing/v4/update-api">Google Safe Browsing Update API protocol</a> and is the
+easiest and quickest way to get started using Safe Browsing.NET.</p>
+<p>Once a <em>Managed Service</em> is created, it will periodically run a synchronization operation on a background thread to
+retrieve threat list updates from the Google Safe Browsing API using a <em>Client</em> and remove stale threats from and add
+new threats to a <em>Threat Database</em> until it is disposed. Between every synchronization operation, a <em>Managed Service</em>
+will pause for a period indicated by the Google Safe Browsing API. If the Google Safe Browsing API does not indicate a
+period to pause for, an implementation specific period is used.</p>
+<p>To indicate when a synchronization operation has started and either completed successfully or failed, a
+<em>Managed Service</em> will raise relevant events you can register event handlers for.</p>
+<p>Unless you restrict it to do so otherwise, by default a <em>Managed Service</em> will synchronize a <em>Threat Database</em> with all
+threat lists made available by the Google Safe Browsing API. When a synchronization operation runs, it will not only
+synchronize existing threat lists in the <em>Threat Database</em> but it will also synchronize new threat lists made
+available, if any, since the last synchronization operation. While this may have the desired effect of ensuring a
+<em>Threat Database</em> is synchronized with all available threat lists, it will have a significant impact on the amount of
+time needed to do so as well as on bandwidth, memory, and disk utilization.</p>
+<p>As a rule of thumb, the more threat lists that need to be synchronized with a <em>Threat Database</em>, the longer it will
+take for a synchronization operation to complete and the more bandwidth, memory, and disk utilization that will be
+required. If you are not interested in synchronizing a <em>Threat Database</em> with all available threat lists, you are
+encouraged to restrict the <em>Managed Service</em> to synchronize it with only the specific threat lists you are interested
+in to minimize resource utilization.</p>
+<p>When you lookup a URL using a <em>Managed Service</em>, it will first query the <em>Threat Database</em> to determine whether or not
+the URL exists in it. If the URL does not exist in the <em>Threat Database</em>, the URL is considered safe.</p>
+<p>If the URL does exist in the <em>Threat Database</em>, a <em>Managed Service</em> consults a <em>Cache</em> to determine whether or not the
+URL exists in it. If the URL exists in the <em>Cache</em>, the relevant cache entry is unexpired, and the URL is marked as
+safe by the relevant unexpired cache entry, the URL is considered safe.</p>
+<p>If the URL exists in the <em>Cache</em>, the relevant cache entry is unexpired, and the URL is marked unsafe by the relevant
+unexpired cache entry, the URL is considered unsafe.</p>
+<p>If the URL exists in the <em>Cache</em> and the relevant cache entry, regardless of whether it marks the URL as safe or
+unsafe, is expired, or if the URL does not exist in the <em>Cache</em>, the <em>Managed Service</em> will query the Google Safe
+Browsing API using a <em>Client</em> to determine whether the URL is safe or unsafe. The response is cached in the <em>Cache</em>
+with the time-to-live (TTL) indicated by the response.</p>
+<h2 id="how-to-create-a-managed-service">How To: Create a Managed Service</h2>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

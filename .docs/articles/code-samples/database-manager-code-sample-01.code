@@ -1,0 +1,98 @@
+using Gee.External.Browsing.Services;
+using System;
+
+namespace Examples {
+    /// <summary>
+    ///     Main Program.
+    /// </summary>
+    public static class Program {
+        /// <summary>
+        ///     Execute Main Program.
+        /// </summary>
+        /// <param name="args">
+        ///     A collection of arguments passed from the command line.
+        /// </param>
+        /// <returns>
+        ///     A task representing the asynchronous operation
+        /// </returns>
+        public static void Main(string[] args) {
+            // ...
+            //
+            // Create a database manager that uses a JSON database that is persisted to disk and an HTTP client to
+            // communicate with the Google Safe Browsing API.
+            //
+            // The database manager will automatically setup a database and manage it (i.e. it will automatically
+            // synchronize it with the Google Safe Browsing API in accordance with the Google Safe Browsing Update API
+            // protocol).
+            //
+            // You can, for example, use another mechanism, such as an unmanaged service, to query the database.
+            var databaseManager = BrowsingDatabaseManager.Build()
+                .UseHttpClient("YOUR_GOOGLE_API_KEY")
+                .UseJsonDatabase("/Google.json")
+                .Build();
+
+            using (databaseManager) {
+                // ...
+                //
+                // Register event handlers to be notified when a threat list is retrieved and either synchronized
+                // successfully or failed to synchronize.
+                databaseManager.ThreatListSynchronizationCompleted += Program.OnThreatListSyncCompleted;
+                databaseManager.ThreatListSynchronizationFailed += Program.OnThreatListSyncFailed;
+
+                Console.ReadLine();
+            }
+        }
+
+        /// <summary>
+        ///     Handle a Threat List Synchronization Completed Event.
+        /// </summary>
+        /// <param name="eventArgs">
+        ///     A <see cref="ThreatListSynchronizationCompletedEventArgs" /> indicating the nature of the event.
+        /// </param>
+        private static void OnThreatListSyncCompleted(ThreatListSynchronizationCompletedEventArgs eventArgs) {
+            // ...
+            //
+            // Represents the threat list that was retrieved from the Google Safe Browsing API and synchronized in the
+            // database.
+            var threatList = eventArgs.SynchronizedThreatList;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list started.
+            var syncStartDate = eventArgs.SynchronizationStartDate;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list completed.
+            var syncCompleteDate = eventArgs.SynchronizationCompletionDate;
+        }
+
+        /// <summary>
+        ///     Handle a Threat List Synchronization Failed Event.
+        /// </summary>
+        /// <param name="eventArgs">
+        ///     A <see cref="ThreatListSynchronizationFailedEventArgs" /> indicating the nature of the event.
+        /// </param>
+        private static void OnThreatListSyncFailed(ThreatListSynchronizationFailedEventArgs eventArgs) {
+            // ...
+            //
+            // Represents the threat list that failed to synchronize in the database.
+            var threatList = eventArgs.SkippedThreatList;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list started.
+            var syncStartDate = eventArgs.SynchronizationStartDate;
+
+            // ...
+            //
+            // Represents the date, in UTC, the synchronize operation for the threat list failed.
+            var syncFailDate = eventArgs.SynchronizationFailureDate;
+
+            // ...
+            //
+            // Represents the exception that was thrown when the synchronize operation for the threat list failed.
+            var syncException = eventArgs.SynchronizationException;
+        }
+    }
+}
