@@ -49,6 +49,6 @@ CALL copy /V /Y ^
 
 CALL cd %~dp0\nuget
 CALL nuget pack
-CALL copy /V /Y %~dp0\nuget\Gee.External.Browsing.1.0.0-rc.nupkg %~dp0\Gee.External.Browsing.1.0.0-rc.nupkg
+CALL copy /V /Y %~dp0\nuget\Gee.External.Browsing.1.0.0.nupkg %~dp0\Gee.External.Browsing.1.0.0.nupkg
 CALL cd %~dp0
 CALL rmdir /S /Q %~dp0\nuget

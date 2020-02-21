@@ -3,7 +3,7 @@
     <metadata>
         <id>Gee.External.Browsing</id>
         <title>Safe Browsing.NET</title>
-        <version>1.0.0-rc</version>
+        <version>1.0.0</version>
         <authors>Ahmed Garhy (@9ee1)</authors>
         <owners>Ahmed Garhy (@9ee1)</owners>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
@@ -11,9 +11,10 @@
         <projectUrl>https://github.com/9ee1/SafeBrowsing.NET</projectUrl>
         <description>Safe Browsing.NET is an opinionated .NET implementation of the Google Safe Browsing API.</description>
         <summary>Safe Browsing.NET is an opinionated .NET implementation of the Google Safe Browsing API.</summary>
-        <releaseNotes>Initial release candidate.</releaseNotes>
+        <releaseNotes>Initial release.</releaseNotes>
         <copyright>Copyright (c) Ahmed Garhy</copyright>
-        <repository url="https://github.com/9ee1/SafeBrowsing.NET" />
+        <repository type="git" url="https://github.com/9ee1/SafeBrowsing.NET.git" />
+        <tags>googlesafebrowing google-safebrowsing google-safe-browsing malware malwaredetect malware-detect phising phisingdetect phising-detect security socialengineering social-engineering socialengineeringattacks social-engineering-attacks</tags>
         <dependencies>
             <group targetFramework=".NETStandard2.0">
                 <dependency id="Flurl.Http" version="2.4.2" />
