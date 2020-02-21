@@ -5,7 +5,7 @@ Safe Browsing.NET is an opinionated .NET implementation of the
 [Google Safe Browsing API 4](https://developers.google.com/safe-browsing/v4), and has a flexible and modular API that
 is ridiculously easy to learn, pick up, and extend.
 
-[![NuGet](https://img.shields.io/nuget/dt/Gee.External.Browsing?label=Safe%20Browsing.NET%20V1.0.0-RC&style=for-the-badge)](https://www.nuget.org/packages/Gee.External.Browsing/1.0.0-rc)
+[![NuGet](https://img.shields.io/nuget/dt/Gee.External.Browsing?label=Safe%20Browsing.NET%20V1.0.0&style=for-the-badge)](https://www.nuget.org/packages/Gee.External.Browsing/1.0.0)
 
 ## Features
 
@@ -66,10 +66,6 @@ avoid having your account disabled by Google. For more information, please see t
 Safe Browsing.NET is distributed as a [NuGet package](https://www.nuget.org/packages/Gee.External.Browsing/). Either
 open the NuGet Package Manager in Visual Studio and search for "Safe Browsing.NET" or head over to the
 [NuGet website](https://www.nuget.org/packages/Gee.External.Browsing/) and download the NuGet package yourself.
-
-The current version is a *pre-release version*. Please make sure you select *include prerelease* in the NuGet Package
-Manager in Visual Studio in order to install it. For more information, please see the
-[NuGet documentation](https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages).
 
 ## Quick Example
 
